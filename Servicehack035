@@ -219,8 +219,7 @@ var ctx = com.mojang.minecraftpe.MainActivity.currentMainActivity.get();
 var alert = new android.app.AlertDialog.Builder(ctx);
 
 
-      
-      alert.setGravity(android.view.Gravity.CENTER);
+
       var scroll = new android.widget.ScrollView(ctx);
       var layout = new android.widget.LinearLayout(ctx);
       layout.setOrientation(1);
