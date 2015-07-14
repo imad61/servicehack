@@ -1,0 +1,8 @@
+bar tick=0;
+function modTick(){
+if(tick==20){
+clientMessage("YEahitworks");
+tick=0;
+}
+tick++;
+  }
