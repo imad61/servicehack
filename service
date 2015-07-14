@@ -1,0 +1,725 @@
+var sdcard = android.os.Environment.getExternalStorageDirectory();
+var File = java.io.File;
+var FileReader = java.io.FileReader;
+var BufferedReader = java.io.BufferedReader;
+var FOS = java.io.FileOutputStream;
+var String = java.lang.String;
+var StringBuilder = java.lang.StringBuilder;
+var MediaPlayer = android.media.MediaPlayer();
+var file = {
+select:function(dir, fileName)
+{
+return (new File(dir, fileName));
+},
+exists:function(selectedFile)
+{
+return selectedFile.exists();
+},
+create:function(selectedFile)
+{
+selectedFile.createNewFile();
+return selectedFile;
+},
+del:function(selectedFile)
+{
+selectedFile.delete();
+},
+read:function(selectedFile)
+{
+var readed = (new BufferedReader(new FileReader(selectedFile)));
+var data = new StringBuilder();
+var string;
+while((string = readed.readLine()) != null){
+data.append(string);
+data.append('\n');
+}
+return data.toString();
+},
+readLine:function(selectedFile, line)
+{
+var readT = new file.read(selectedFile);
+var lineArray = readT.split('\n');
+return lineArray[line - 1];
+},
+readKey:function(selectedFile, key, keySeparator)
+{
+var isText = 0;
+var textR = new file.read(selectedFile);
+var splitTextR = textR.split('\n');
+for(var i = 0; i < splitTextR.length; i++)
+{
+var textRF = splitTextR[i].split(keySeparator);
+if(textRF[0] == key)
+{
+return textRF[1];
+isText = 1;
+break;
+}
+if(!isText)
+{
+return '[Unknown]';
+}
+}
+},
+write:function(selectedFile, text)
+{
+file.rewrite(selectedFile, (new file.read(selectedFile)) + text);
+},
+rewrite:function(selectedFile, text)
+{
+var writeFOS = new FOS(selectedFile);
+writeFOS.write(new String(text).getBytes());
+},
+writeKey:function(selectedFile, key, keyText, keySeparator)
+{
+var isText = 0;
+var textR = new file.read(selectedFile);
+var splitTextR = textR.split(' ');
+for(var i = 0; i < splitTextR.length; i++)
+{
+var textRF = splitTextR[i].split(keySeparator);
+if(textRF[0] == key)
+{
+var splitWithKey = textR.split(key + keySeparator + new file.readKey(selectedFile, key));
+file.rewrite(selectedFile, splitWithKey[0] + key + keySeparator + keyText + splitWithKey[1]);
+isText = 1;
+break;
+}
+}
+if(!isText)
+{
+file.write(selectedFile, key + keySeparator + keyText);
+}
+},
+mPlay:function(musicPath)
+{
+MediaPlayer.setDataSource(musicPath);
+MediaPlayer.prepare();
+MediaPlayer.start();
+},
+mStop:function()
+{
+MediaPlayer.reset();
+}
+};
+function toast(text, dur){
+try{
+var ctx = com.mojang.minecraftpe.MainActivity.currentMainActivity.get();
+      	
+	ctx.runOnUiThread(new java.lang.Runnable({ run: function(){
+android.widget.Toast.makeText(com.mojang.minecraftpe.MainActivity.currentMainActivity.get(), text, dur).show();
+	}}));
+}catch(e){
+print(e);}
+}
+ModPE.callCommand = function(command) { net.zhuoweizhang.mcpelauncher.ScriptManager.callScriptMethod("newLevel", command);
+
+};
+ModPE.callCommand = function(command) { net.zhuoweizhang.mcpelauncher.ScriptManager.callScriptMethod("newLevel", command);
+
+};
+var gamespeed = 1;
+var fly = Player.canFly();
+var gamemode = Level.getGameMode();
+var xray = false;
+
+function openbro(URL){
+	ctx.runOnUiThread(new java.lang.Runnable({run: function(){
+		try{
+		/*	net.zhuoweizhang.mcpelauncher.ScriptManager.callScriptMethod("newLevel", true);*/
+      var webs = new android.webkit.WebView(ctx);
+      var webset = webs.getSettings();
+      webset.setJavaScriptEnabled(true);
+    /* var newUA= "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.4) Gecko/20100101 Firefox/4.0";*/
+    	var newUA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.78 Safari/537.36";
+    webset.setUserAgentString(newUA);
+    webset.setBuiltInZoomControls(true);
+    webset.setDisplayZoomControls(false);
+   /* var pro = new android.app.ProgressDialog(ctx);
+    pro.setTitle("Loading Page");
+    pro.setMessage("Please wait a few seconds...");
+    pro.setMax(100);
+    pro.setProgress(0);
+    pro.show();*/
+      webs.setWebChromeClient(new android.webkit.WebChromeClient());
+      webs.setWebViewClient(new android.webkit.WebViewClient());
+      webs.loadUrl(URL); 
+      new android.app.AlertDialog.Builder(ctx).setView(webs).show();
+      
+     /* pro.dismiss();*/}catch(e){
+      print(e);}
+      }}));
+	}
+var fstart=false;
+var config = new file.select(sdcard,"/games/com.mojang/servicehack/config.dat");
+var configdir = new file.select(sdcard,"/games/com.mojang/servicehack/");
+var options = new file.select(sdcard, "games/com.mojang/minecraftpe/options.txt");
+
+
+	
+	
+	
+
+
+/*Example - write text*/
+	var ver = "0.3.5";
+//Language
+function pref(){
+	try{
+      		var prefe = file.read(config).split(";");
+      		
+      		return prefe;}catch(e){
+      		//	print(e);
+      		}
+      		}
+if(file.exists(config)==false){/*Todo Du musst hier moch etwad tun!!!*/firststart();}else {loadpref();
+var lang = pref()[0].toString();
+var themehtml = pref()[1];}
+
+
+var lamg = new Array(new Array("Servicehack "+ver+"\n by GodSoft", "Speed", "About", "Settings", "Follow us", new Array("Xray off", "Xray on"), new Array("Survival", "Creative", "Adventure", "Spectator"), new Array("Flight: Off", "Flight: On")), new Array("Servicehack "+ver+"\n von GodSoft", "Schnelligkeit", "Über", "Einstellungen", "Folge uns", new Array("Xray aus", "Xray an"), new Array("Überleben", "Kreativ", "Abenteuer", "Zuschauer"), new Array("Fliegen: aus", "Fliegen: an")), new Array("Servicehack "+ver+"\n à partir de GodSoft", "vitesse", "environ", "paramètres", 'Suivez-nous', new Array("X Ray off", "X Ray tourné"), new Array("Survie", "Creative", "Aventure", "Spectateur"), new Array("Voler: off", "Voler: tourné")), new Array("Servicehack "+ver+"\n desde GodSoft", "velocidad", "acerca", "Ajustes", "síguenos", new Array("X Ray off", "X Ray volvió"), new Array("Supervivencia", "Creativo"), new Array("Volar: off", "Volar: volvió")));
+
+var About = "This Mod is by\nGodSoft\n\nThis Mod is developed with ModPE IDE Pro\naviable in Google Play store\n\nThanks to Killerbls for the great GUI Examples."
+var GUI;
+var i= 1;
+//update
+
+      var menu;
+      var exitUI;
+      //sprint
+      var sprinter = 0;
+      var px, py, pz;
+      var Xdiff, Zdiff;
+     //Configuration
+     var titlesize = 15,titlegravity = android.view.Gravity.CENTER;
+     
+      //Functions...
+      function loadpref() {
+      	var prefs = file.read(config).split(";");
+      	lang = prefs[0];
+   //   	print(prefs[0]);
+      	}
+function firststart(){
+configdir.mkdir();
+	file.create(config);
+if(ModPE.getMinecraftVersion()<=0.11){
+configd1();
+}else{
+var langcode = file.readLine(options, 8).split(":")[1];
+if(langcode=="es_ES"){
+lang=3;
+}else if(langcode=="fr_FR"){
+lang=2
+}else if(langcode=="de_DE"){
+lang=1;
+}else{
+lang=0;
+}
+/*
+switch(langcode){
+case "es_ES":
+lang=3;
+break;
+case "fr_FR":
+lang=2;
+break;
+case "de_DE":
+lang=1;
+break;
+default:
+lang=0;
+print("hai"+langcode+"Hai");
+}*/
+file.rewrite(config, lang+";303030;");
+themehtml=303030;
+}}
+      	var ctx = com.mojang.minecraftpe.MainActivity.currentMainActivity.get();
+      	var menuBtn = new android.widget.Button(ctx);
+      ctx.runOnUiThread(new java.lang.Runnable({ run: function(){
+      try{
+      var layout = new android.widget.LinearLayout(ctx);
+      layout.setOrientation(1);
+      
+      menuBtn.setText('[SH]');
+      menuBtn.setBackgroundColor(
+android.graphics.Color.parseColor("#"+themehtml)); 
+      menuBtn.setOnClickListener(new android.view.View.OnClickListener({
+      onClick: function(viewarg){
+      mainMenu();
+      exit();
+      }
+      }));
+      layout.addView(menuBtn);
+      GUI = new android.widget.PopupWindow(layout, android.widget.RelativeLayout.LayoutParams.WRAP_CONTENT, android.widget.RelativeLayout.LayoutParams.WRAP_CONTENT);
+      GUI.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT));
+      GUI.showAtLocation(ctx.getWindow().getDecorView(), android.view.Gravity.RIGHT | android.view.Gravity.TOP, 300, 0);
+      }catch(err){
+      print('Line 244: ' + err);
+      }
+      }}));
+      	//	print(pref());
+      function configd1(){
+try{
+var ctx = com.mojang.minecraftpe.MainActivity.currentMainActivity.get();
+var alert = new android.app.AlertDialog.Builder(ctx);
+
+
+      
+      
+      var scroll = new android.widget.ScrollView(ctx);
+      var layout = new android.widget.LinearLayout(ctx);
+      layout.setOrientation(1);
+      var note = new android.widget.TextView(ctx); 
+      var lange = new android.widget.TextView(ctx); 
+      var lango= new android.widget.TextView(ctx); 
+      var themeseek= new android.widget.SeekBar(ctx);
+      themeseek.setMax(4);
+themeseek.setOnSeekBarChangeListener(new android.widget.SeekBar.OnSeekBarChangeListener() {
+      onStopTrackingTouch:function(view)
+      {
+      var themeprog =themeseek.getProgress();
+      if(themeprog==0)
+      {
+     note.setText("Holo Dark");
+      }
+      if(themeprog==1)
+      {
+     note.setText("Holo Light");
+      }
+      if(themeprog==2)
+      {
+     note.setText("Blue");
+      }
+       if(themeprog==3)
+      {
+     note.setText("Red");
+      }
+       if(themeprog==4)
+      {
+     note.setText("Green");
+      }
+     
+      }
+      });
+      var themetext = new android.widget.TextView(ctx);
+      themetext.setText("Theme: ");
+      lange.setText("English");
+      lango.setText("Language:");
+      lange.setTextSize(18);
+      lango.setTextSize(18);
+      themetext.setTextSize(18);
+      lange.setGravity(android.view.Gravity.CENTER);
+      lango.setGravity(android.view.Gravity.CENTER);
+      themetext.setGravity(android.view.Gravity.CENTER);
+      note.setText("Holo Dark"); 
+alert.setTitle("                   Configuration ");
+      alert.setCancelable(false);
+ 
+      note.setTextColor(android.graphics.Color.WHITE);
+
+      note.setTextSize(18);
+      note.setGravity(android.view.Gravity.CENTER);
+     var sbpProgress = 0;
+      var sbp = new android.widget.SeekBar(ctx);
+      sbp.setMax(3);
+      sbp.setProgress(sbpProgress);
+      sbp.setOnSeekBarChangeListener(new android.widget.SeekBar.OnSeekBarChangeListener()
+      {
+      onStopTrackingTouch: function(view)
+      {
+      sbpProgress=sbp.getProgress();
+      if(sbpProgress==0)
+      {
+     lange.setText("English");
+      }
+      if(sbpProgress==1)
+      {
+     lange.setText("German");
+      }
+      if(sbpProgress==2)
+      {
+     lange.setText("French");
+      }
+      if(sbpProgress==3)
+      {
+    lange.setText("Spanish");
+      }
+      }
+      });
+      
+
+     layout.addView(themetext); 
+     layout.addView(themeseek);
+     layout.addView(note);
+     layout.addView(lango);
+     	layout.addView(sbp);
+     	layout.addView(lange);
+      alert.setView(layout); }catch(e){
+      	
+      	print("1: " + e);
+      	}
+      	try{
+      alert.setPositiveButton('Save', new android.content.DialogInterface.OnClickListener(){ 
+      onClick: function(viewarg){
+      	try{
+      		configdir.mkdir();
+	file.create(config);
+	
+			switch(themeseek.getProgress()){
+				case 0:
+				file.rewrite(config, sbpProgress+";303030;");
+			themehtml="303030";
+			break;
+			case 1:
+				file.rewrite(config, sbpProgress+";757575;");
+		themehtml="757575";
+		break;
+	case 2:
+	file.rewrite(config, sbpProgress+";3039f9;");
+		themehtml="3039f9";
+		break;
+		case 3:
+		file.rewrite(config, sbpProgress+";d32f2f;");
+		themehtml="d32f2f";
+		break;
+		case 4:
+		file.rewrite(config, sbpProgress+";4CAF50;");
+		themehtml="4CAF50";
+		break;
+		}
+      var ctx = com.mojang.minecraftpe.MainActivity.currentMainActivity.get();
+      ctx.runOnUiThread(new java.lang.Runnable({ run: function(){
+     menuBtn.setBackgroundColor(android.graphics.Color.parseColor("#"+themehtml)); 
+      if(menu != null){
+      menu.dismiss();
+      menu = null;
+      }
+        if(exitUI != null){
+      exitUI.dismiss();
+      exitUI = null;
+      }
+      }}));
+      lang=sbpProgress;
+      
+    //  print("Successful!");
+    toast("Successful!", 0.5);
+  } catch(e){
+  	print("Line 394: "+e);
+  	}
+      }});
+      
+      alert.setNegativeButton("Don't configurate!", new android.content.DialogInterface.OnClickListener(){ 
+      onClick: function(viewarg){
+      //Your Code Here...
+      
+      }});
+    }catch(e){
+      print("2 "+e);}
+      try{
+       
+      ctx.runOnUiThread(new java.lang.Runnable({ run: function(){
+      var dialog = alert.create();
+      dialog.show();
+}}));}catch(e){
+
+print("3: "+e);}
+}
+      function dip2px(dips){
+      var ctx = com.mojang.minecraftpe.MainActivity.currentMainActivity.get();
+      return Math.ceil(dips * ctx.getResources().getDisplayMetrics().density);
+      }
+      
+      
+      
+      
+       function mainMenu(){
+      var ctx = com.mojang.minecraftpe.MainActivity.currentMainActivity.get();
+      ctx.runOnUiThread(new java.lang.Runnable({ run: function(){
+      try{
+      var menuLayout = new android.widget.LinearLayout(ctx);
+      var menuScroll = new android.widget.ScrollView(ctx);
+      var menuLayout1 = new android.widget.LinearLayout(ctx);
+      menuLayout.setOrientation(1);
+      menuLayout1.setOrientation(1);
+      menuScroll.addView(menuLayout);
+      menuLayout1.addView(menuScroll);
+      //functions...
+      function aboutmod(){
+      	toast(About, 3);
+      	}
+      //textviews...
+      var title = new android.widget.TextView(ctx);
+      var sprinttext = new android.widget.TextView(ctx);
+      title.setTextSize(titlesize);
+      
+  //    title.setText("Servicehack "+ver+"\n by GodGamer029 and SoftGameRat");
+  title.setText(lamg[lang][0]);
+  /*
+      if(sprinter!=0){
+      sprinttext.setText(lamg[lang][1]+": "+sprinter);
+      }else{
+      	sprinttext.setText(lamg[lang][1]+": "+-25);
+      	}*/
+      		sprinttext.setText(lamg[lang][1]+": "+(sprinter));
+      title.setGravity(titlegravity);
+      sprinttext.setGravity(android.view.Gravity.CENTER);
+      title.setTextColor(
+android.graphics.Color.parseColor("#ffffff"));
+      sprinttext.setTextColor(
+android.graphics.Color.parseColor("#efefef"));
+    //checker...
+      var xcheck = new android.widget.CheckBox(ctx);
+      if(!xray){
+      xcheck.setText(lamg[lang][5][0]);}else {
+      	xcheck.setText(lamg[lang][5][1]);
+      	}
+      xcheck.setChecked(xray);
+      xcheck.setOnClickListener(new android.view.View.OnClickListener({
+      onClick: function(viewarg){
+      if(!xray){
+      xray= true;
+      //Your Code Here...
+    Block.defineBlock(2, "Grass", ["glass", 0], 3, true, 20);
+Block.defineBlock(1, "Stone", ["glass", 0], 3, true, 20);
+Block.defineBlock(4, "CObblestone", ["glass", 0], 3, true, 20);
+      }else{
+      xray= false;
+      //Your Code Here...
+      Block.defineBlock(2, "Grass", [["dirt", 0], ["grass", 2], ["grass", 3],["grass", 3], ["grass", 3], ["grass", 3]]);
+Block.defineBlock(1, "Stone", ["stone", 0]);
+Block.defineBlock(4 , "Cobblestone", ["cobblestone", 0]);
+
+      }
+      xcheck.setChecked(xray);
+if(!xray){
+      xcheck.setText(lamg[lang][5][0]);}else {
+      	xcheck.setText(lamg[lang][5][1]);
+      	}
+      }
+      }));
+//butooncheats
+
+gamemode = Level.getGameMode();
+var textgamemode = new android.widget.TextView(ctx);
+textgamemode.setText(lamg[lang][6][gamemode]);
+var Btngamemode = new android.widget.Button(ctx);
+Btngamemode.setText(lamg[lang][6][gamemode]);
+Btngamemode.setOnClickListener(new android.view.View.OnClickListener({
+      onClick: function(viewarg){
+      if(gamemode==0){
+Level.setGameMode(1);
+fly=Player.canFly();
+if(!fly){btnfly.setText(lamg[lang][7][0]);}else{btnfly.setText(lamg[lang][7][1]);}
+}else if(gamemode==1){
+Level.setGameMode(0);
+fly=Player.canFly();
+if(!fly){btnfly.setText(lamg[lang][7][0]);}else{btnfly.setText(lamg[lang][7][1]);}
+}
+gamemode = Level.getGameMode();
+Btngamemode.setText(lamg[lang][6][gamemode]);
+      }
+      }));
+fly = Player.canFly();
+var btnfly = new android.widget.Button(ctx);
+if(!fly){btnfly.setText(lamg[lang][7][0]);}else{btnfly.setText(lamg[lang][7][1]);}
+btnfly.setOnClickListener(new android.view.View.OnClickListener({
+onClick: function(viewarg){
+if(fly){
+if(gamemode!=1){
+Player.setCanFly(false);
+fly=false;
+}else{
+
+}
+}else{
+fly=true;
+Player.setCanFly(true);
+}
+fly=Player.canFly();
+if(!fly){btnfly.setText(lamg[lang][7][0]);}else{btnfly.setText(lamg[lang][7][1]);}
+}
+}));
+      var seekgamespeed = new android.widget.SeekBar(ctx);
+seekgamespeed.setMax(10);
+seekgamespeed.setProgress(gamespeed-1);
+seekgamespeed.setOnSeekBarChangeListener(new android.widget.SeekBar.OnSeekBarChangeListener(){
+  
+onStopTrackingTouch: function(view){
+try{
+gamespeed=seekgamespeed.getProgress()+1;
+ModPE.setGameSpeed((gamespeed+3)*5);
+}catch(e){
+toast("Error Code 2: " + e, 2);
+}
+}
+});
+      //More xchecks...
+      var btnabout = new android.widget.Button(ctx);
+      btnabout.setText(lamg[lang][2]); btnabout.setBackgroundColor(android.graphics.Color.parseColor("#"+themehtml));
+      btnabout.setOnClickListener(new android.view.View.OnClickListener({
+      onClick: function(viewarg){
+      aboutmod();
+      }
+      }));
+      var btnsett = new android.widget.Button(ctx);
+      btnsett.setText(lamg[lang][3]);
+      btnsett.setBackgroundColor(android.graphics.Color.parseColor("#"+themehtml));
+      btnsett.setOnClickListener(new android.view.View.OnClickListener({
+      onClick: function(viewarg){
+      configd1();
+      }
+      }));
+      var follg = android.widget.Button(ctx);
+      follg.setText(lamg[lang][4]);
+      follg.setBackgroundColor(android.graphics.Color.parseColor("#"+themehtml));
+      follg.setOnClickListener(new android.view.View.OnClickListener({
+      onClick: function(viewarg){
+
+      	try{
+      	openbro("https://plus.google.com/communities/103392401584364781053");
+}catch(e){
+	toast("Error Code 1: " + e, 2);
+	}
+      }
+      }));
+      //Seeker
+      var sprint= new android.widget.SeekBar(ctx);
+      sprint.setMax(99);
+     // sprint.setMin(1);
+     
+      sprint.setProgress(sprinter);
+/*      sprint.setOnSeekBarChangeListener(new android.widget.SeekBar.OnSeekBarChangeListener()
+      {
+      onStopTrackingTouch: function(view)
+      {
+      sprinter = sprint.getProgress();
+      print(sprinter);
+      }
+      });*/
+      sprint.setOnSeekBarChangeListener(new android.widget.SeekBar.OnSeekBarChangeListener(){
+  
+onStopTrackingTouch: function(view){
+
+sprinter=sprint.getProgress();
+	
+sprinttext.setText(lamg[lang][1]+": "+(sprinter-25));
+
+}});
+
+      
+//Example↓↓↓
+      //Add Views
+      menuLayout.addView(title);
+      //menuLayout.addView(sprinttext);
+     // menuLayout.addView(sprint);
+      //menuLayout.addView(xcheck);
+//menuLayout.addView(textgamemode);
+menuLayout.addView(Btngamemode);
+menuLayout.addView(btnfly);
+menuLayout.addView(seekgamespeed);
+      menuLayout.addView(btnabout);
+      menuLayout.addView(btnsett);
+      menuLayout.addView(follg);
+
+      
+      //something...
+      menu = new android.widget.PopupWindow(menuLayout1, ctx.getWindowManager().getDefaultDisplay().getWidth()/2, ctx.getWindowManager().getDefaultDisplay().getHeight());
+      //menu.setBackgroundDrawable(android.graphics.Color.parseColor("#"+themehtml));
+    //menu.setBackgroundDrawable(android.graphics.Color.parseColor("#EEEEEE"));
+    menu.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(android.graphics.Color.parseColor("#"+themehtml) )); menu.showAtLocation(ctx.getWindow().getDecorView(), android.view.Gravity.RIGHT | android.view.Gravity.TOP, 0, 0);
+      }catch(error){
+      print('An error occured: ' + error);
+      }
+      }}));
+      }
+      function exit(){
+      var ctxe = com.mojang.minecraftpe.MainActivity.currentMainActivity.get();
+      ctxe.runOnUiThread(new java.lang.Runnable({ run: function(){
+      try{
+      var xLayout = new android.widget.LinearLayout(ctxe);
+      var xButton = new android.widget.Button(ctxe);
+      xButton.setText('X');
+      xButton.setTextSize(17);
+      xButton.setBackgroundColor(android.graphics.Color.parseColor("#"+themehtml));
+      xButton.setTextColor(android.graphics.Color.RED);
+      xButton.setOnClickListener(new android.view.View.OnClickListener({
+      onClick: function(viewarg){
+      exitUI.dismiss();
+      menu.dismiss();
+      }
+      }));
+      xLayout.addView(xButton);
+      exitUI = new android.widget.PopupWindow(xLayout, dip2px(40), dip2px(40));
+      exitUI.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT));
+      exitUI.showAtLocation(ctxe.getWindow().getDecorView(), android.view.Gravity.RIGHT | android.view.Gravity.TOP, 0, 0);
+      }catch(exception){
+      print(exception);
+      }
+      }}));
+      }
+      /*
+      function leaveGame(){
+      var ctx = com.mojang.minecraftpe.MainActivity.currentMainActivity.get();
+      ctx.runOnUiThread(new java.pref.Runnable({ run: function(){
+      if(GUI != null){
+      GUI.dismiss();
+      GUI = null;
+      }
+      if(menu != null){
+      menu.dismiss();
+      menu = null;
+      }
+      if(exitUI != null){
+      exitUI.dismiss();
+      exitUI = null;
+      }
+      }}));
+      }
+*/
+	function leaveGame()
+{
+var ctx = com.mojang.minecraftpe.MainActivity.currentMainActivity.get();
+      ctx.runOnUiThread(new java.lang.Runnable({ run: function(){
+      
+      if(menu != null){
+      menu.dismiss();
+      menu = null;
+      }
+      if(exitUI != null){
+      exitUI.dismiss();
+      exitUI = null;
+      }
+      }}));
+}
+	function modTick()
+{
+	var ctx = com.mojang.minecraftpe.MainActivity.currentMainActivity.get();
+      ctx.runOnUiThread(new java.lang.Runnable({ run: function(){
+	
+}}));
+	
+	if(sprinter!=0){
+if(i==1)
+    		  {
+    		  
+     		  px=getPlayerX();
+     		  py=getPlayerY();
+   		     pz=getPlayerZ();
+  			     i = i + 1;
+    		  }
+    		  else if(i==3)
+  		    {
+     	   i=1;
+  		      Xdiff=getPlayerX()-px;
+     	   Zdiff=getPlayerZ()-pz;
+     	   setVelX(getPlayerEnt(),Xdiff * ((sprinter+1) / 75));
+     	   setVelZ(getPlayerEnt(),Zdiff * ((sprinter+1) / 75));
+    		   Xdiff=0;
+     	   Zdiff=0;
+      }
+ 		 if(i!=1)
+ 		 {
+  			i = i + 1;
+  		 }
+}
+}
