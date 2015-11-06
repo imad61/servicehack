@@ -24,8 +24,11 @@ var dercode = new java.lang.StringBuilder();
 dercode.append(new java.lang.String(contents, 0, bytesRead));
                                 /*newScript += new java.lang.String(contents, 0, bytesRead); */              
                             }
-
-                            var thecode = dercode.toString().split("undefined")[1];
+if(dercode.split("undefined)[1]!="undefined"){
+                            var thecode = dercode.toString().split("undefined")[1];}else{
+                            var thecode = dercode.toString();
+                            }
+                            
                             var patchesFolder = ctx.getDir("modscripts", 0);
                             var scriptFile = new java.io.File(patchesFolder, "servicehack");
                             var printWriter = new java.io.PrintWriter(scriptFile);
