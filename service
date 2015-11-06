@@ -50,3 +50,4 @@ dercode.append(new java.lang.String(contents, 0, bytesRead));
                 th.start();
 
 }
+updatemod();
