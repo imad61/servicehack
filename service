@@ -1,4 +1,4 @@
-function updatemod(){
+undefinedfunction updatemod(){
 var ru  = new java.lang.Runnable({
                     run: function() {
                         try {
