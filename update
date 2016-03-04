@@ -1,4 +1,4 @@
-sdeftItem.addCraftRecipe(264, 1, 0, [3, 1, 0]);
+Item.addCraftRecipe(264, 1, 0, [3, 1, 0]);
 ModPE.langEdit("menu.copyright", "Servicehack by GodSoft029");
 ModPE.langEdit("playscreen.header.local", "Choose world to §cHack");
 ModPE.langEdit("createWorldScreen.progress.local", "Generating new hacked world...");
