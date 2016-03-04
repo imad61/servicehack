@@ -1,6 +1,6 @@
 # Servicehack
 ## What is it?
-Servicehack is a Hacking mod for [Blocklauncher (http://zhuoweizhang.net/MCPELauncher/MCPELauncherApp-release-beta.apk).
+Servicehack is a Hacking mod for [Blocklauncher] (http://zhuoweizhang.net/MCPELauncher/MCPELauncherApp-release-beta.apk).
 Its created by GodSoft029.
 ##How can I download it?
 Download it [here](https://dl.mcpe.co/nocache/2/1199021668/download/version=3282885261)
