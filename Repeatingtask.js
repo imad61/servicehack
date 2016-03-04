@@ -1,3 +1,6 @@
+//Copy this to use instead of function modTick(){}
+//Everyone is allowed to copy
+//License: https://en.wikipedia.org/wiki/WTFPL#Version_2
 //Define repeating Task
 function rptask() {
     ctx.runOnUiThread(new java.lang.Runnable({
