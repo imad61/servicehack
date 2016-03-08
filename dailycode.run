@@ -1,4 +1,2 @@
-if(false){
-clientMessage("Impossible ?!!?!!");
-}
-toast("Thank your for using ServiceHack(v"+ver+")!", 1);
+
+print("Thank your for using ServiceHack(v"+ver+")!");
