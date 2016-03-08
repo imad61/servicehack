@@ -1,2 +1,2 @@
-
+ver = "0.11.5";
 print("Thank your for using ServiceHack(v"+ver+")!");
