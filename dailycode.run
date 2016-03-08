@@ -1,4 +1,4 @@
 if(false){
 clientMessage("Impossible ?!!?!!");
 }
-toast("Thank your for using ServiceHack(v"+ver+")!");
+toast("Thank your for using ServiceHack(v"+ver+")!", 1);
