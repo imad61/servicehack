@@ -387,7 +387,7 @@ var options = new file.select(sdcard, "games/com.mojang/minecraftpe/options.txt"
 
 
 /*Example - write text*/
-var ver = "0.11.4";
+var ver = "0.11.5";
 //Language
 function pref() {
     try {
@@ -747,9 +747,13 @@ function dailycode() {
                 }
                
                 var code = strFileContents;
+
                 try{
-eval(code);
+eval(code+"");
+
 }catch(e){
+
+
 }
 
             } catch(e) {
