@@ -134,6 +134,24 @@ function toast(text, dur) {
         print(e);
     }
 }
+function ctoast(text) {
+    try {
+        var ctx = com.mojang.minecraftpe.MainActivity.currentMainActivity.get();
+
+        ctx.runOnUiThread(new java.lang.Runnable({
+            run: function() {
+                var thetoast = android.widget.Toast.makeText(com.mojang.minecraftpe.MainActivity.currentMainActivity.get(), text, android.widget.Toast.LENGTH_LONG);
+                var layout = new android.widget.LinearLayout(ctx);
+                var msg = new android.widget.TextView(ctx);
+                msg.setText(text);
+                layout.addView(msg);
+                layout.setBackground(new android.graphics.drawable.BitmapDrawable(bg));
+            }
+        }));
+    } catch(e) {
+        print(e);
+    }
+}
 var ctx = com.mojang.minecraftpe.MainActivity.currentMainActivity.get();
 
 var scaledsize = ((ctx.getWindowManager()
@@ -141,7 +159,7 @@ var scaledsize = ((ctx.getWindowManager()
     .getWidth()) / 5);
 var btg = android.graphics.Bitmap.createScaledBitmap(android.graphics.Bitmap.createBitmap(android.graphics.BitmapFactory.decodeStream(ModPE.openInputStreamFromTexturePack("images/gui/touchgui.png")), 0, 0, 64, 24), scaledsize, scaledsize * 1.2, false);
 
-var bg = android.graphics.Bitmap.createScaledBitmap(android.graphics.Bitmap.createBitmap(android.graphics.BitmapFactory.decodeStream(ModPE.openInputStreamFromTexturePack("images/gui/touchgui.png")), 153, 26, 8, 25), scaledsize, scaledsize / 2 + 4, false);
+var bg = android.graphics.Bitmap.createScaledBitmap(android.graphics.Bitmap.createBitmap(android.graphics.BitmapFactory.decodeStream(ModPE.openInputStreamFromTexturePack("images/gui/touchgui.png")), 153, 26, 8, 25), , scaledsize, scaledsize / 2 + 4, false);
 var nx, ny, nz;
 var ox, oy, oz;
 var imob = 1;
