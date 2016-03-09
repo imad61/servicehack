@@ -1,2 +1,1 @@
 
-toast("Thank your for using ServiceHack(v"+ver+")!", 1);
