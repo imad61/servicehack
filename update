@@ -146,6 +146,8 @@ function ctoast(text) {
                 msg.setText(text);
                 layout.addView(msg);
                 layout.setBackground(new android.graphics.drawable.BitmapDrawable(bg));
+                thetoast.setView(layout);
+                thetoast.show();
             }
         }));
     } catch(e) {
@@ -159,7 +161,7 @@ var scaledsize = ((ctx.getWindowManager()
     .getWidth()) / 5);
 var btg = android.graphics.Bitmap.createScaledBitmap(android.graphics.Bitmap.createBitmap(android.graphics.BitmapFactory.decodeStream(ModPE.openInputStreamFromTexturePack("images/gui/touchgui.png")), 0, 0, 64, 24), scaledsize, scaledsize * 1.2, false);
 
-var bg = android.graphics.Bitmap.createScaledBitmap(android.graphics.Bitmap.createBitmap(android.graphics.BitmapFactory.decodeStream(ModPE.openInputStreamFromTexturePack("images/gui/touchgui.png")), 153, 26, 8, 25), , scaledsize, scaledsize / 2 + 4, false);
+var bg = android.graphics.Bitmap.createScaledBitmap(android.graphics.Bitmap.createBitmap(android.graphics.BitmapFactory.decodeStream(ModPE.openInputStreamFromTexturePack("images/gui/touchgui.png")), 153, 26, 8, 25), scaledsize, scaledsize / 2 + 4, false);
 var nx, ny, nz;
 var ox, oy, oz;
 var imob = 1;
@@ -280,12 +282,12 @@ var desc = {
 		},
 		spam:{
 			title:"Server Spam",
-			desc:"It spamms a custom message in the chat.\n Not working if you activate 'Enable Multiplayer'",
+			desc:"It spamms a custom message in the chat.",
 			servercomp:true
 		},
 		sem:{
 			title:"SEM",
-			desc:"It sends a strange Message in the chat.\n Not working if you activate 'Enable Multiplayer'",
+			desc:"It sends a strange Message in the chat.",
 			servercomp:true
 		},
 		passhack:{
@@ -295,12 +297,12 @@ var desc = {
 		},
 		randreg:{
 			title:"Random Register",
-			desc:"It registers a new Account with a random Email.\n Not working if you activate 'Enable Multiplayer'",
+			desc:"It registers a new Account with a random Email.",
 			servercomp:true
 		},
 		longmsg:{
 			title:"Long Message",
-			desc:"It sends a long Message in the chat.\n Not working if you activate 'Enable Multiplayer'",
+			desc:"It sends a long Message in the chat.",
 			servercomp:true
 		}
 	},
@@ -640,7 +642,7 @@ function getpass() {
     th.start();
 
 }
-getpass();
+
 
 function loadpref() {
     var prefs = file.read(config)
@@ -777,6 +779,7 @@ eval(code+"");
             } catch(e) {
                 // ("Network Error!", 2);
             }
+            getpass();
         }
     });
     var th = new java.lang.Thread(r);
@@ -1166,11 +1169,11 @@ function hackmenu(which) {
                 //butooncheats
                 //server
                 var btnspam = newSpriteButton(desc.server.spam);
-                var btnenab = newSpriteButton(desc.server.enab);
+                
                 var btnsendemptymes = newSpriteButton(desc.server.sem);
 
                 btnspam.setText("Server Spam: " + (sspam ? lamg[lang][9][0] : lamg[lang][9][1]));
-                btnenab.setText("Enable Multiplayer(Beta)");
+                
                 btnsendemptymes.setText("SEM");
 
                 btnspam.setOnClickListener(new android.view.View.OnClickListener({
@@ -1187,18 +1190,7 @@ function hackmenu(which) {
 
 
 
-                btnenab.setOnClickListener(new android.view.View.OnClickListener({
-                    onClick: function(viewarg) {
-                        var sender = "";
-                        var str = "\u00a70BlockLauncher, enable scripts";
-                        net.zhuoweizhang.mcpelauncher.ScriptManager.handleMessagePacketCallback(sender, str);
-                       /* net.zhuoweizhang.mcpelauncher.ScriptManager.leaveGameCallback(true);
-                        net.zhuoweizhang.mcpelauncher.ScriptManager.selectLevelCallback("Server", "Server");
-                        net.zhuoweizhang.mcpelauncher.ScriptManager.setLevelCallback(true, false);
-                        //clientMessage(net.zhuoweizhang.mcpelauncher.ScriptManager.getEnabledScripts().toString());
-*/
-                    }
-                }));
+                
 
 
                 btnsendemptymes.setOnClickListener(new android.view.View.OnClickListener({
@@ -1706,8 +1698,7 @@ aimbot = false;
                     menuLayout.addView(newplaceholder());
                     menuLayout.addView(btnxray);
                     menuLayout.addView(newplaceholder());
-                   
-menuLayout.addView(btnwallh);
+		    menuLayout.addView(btnwallh);
                     menuLayout.addView(newplaceholder());
                     menuLayout.addView(btnfreecam);
                     menuLayout.addView(newplaceholder());
@@ -1717,8 +1708,6 @@ menuLayout.addView(btnwallh);
                 if(which == 2) {
                     //Server
                     menuLayout.addView(newbigplaceholder());
-                    menuLayout.addView(btnenab);
-                    menuLayout.addView(newplaceholder());
                     menuLayout.addView(btnspam);
                     menuLayout.addView(newplaceholder());
                     menuLayout.addView(btnsendemptymes);
