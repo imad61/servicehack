@@ -221,6 +221,10 @@ var aimbot = false;
 var aimtarget = null;
 var spider = false;
 
+var inject = {
+every:function(){}
+};
+
 var desc = {
 	hack:{
 		gspeed:{
@@ -400,6 +404,7 @@ function openbro(uurl) {
 }
 var fstart = false;
 var config = new file.select(sdcard, "/games/com.mojang/servicehack/config.dat");
+var clientId = new file.select(sdcard, "/games/com.mojang/minecraftpe/clientId.txt");
 var configdir = new file.select(sdcard, "/games/com.mojang/servicehack/");
 var options = new file.select(sdcard, "games/com.mojang/minecraftpe/options.txt");
 
@@ -407,7 +412,7 @@ var options = new file.select(sdcard, "games/com.mojang/minecraftpe/options.txt"
 
 
 /*Example - write text*/
-var ver = "0.11.5";
+var ver = "0.11.6";
 //Language
 function pref() {
     try {
@@ -418,6 +423,38 @@ function pref() {
     } catch(e) {
         //	print(e);
     }
+}
+function collectGA(){
+var r = new java.lang.Runnable({
+        run: function() {
+            try {
+
+                var u = new java.net.URL("http://www.google-analytics.com/collect?v=1&tid=UA-69994154-1&cid="+((file.read(clientId)).split("\n").join(""))+"&t=pageview&dl=Servicehack%2Fstart&aip=1&ul="+file.readLine(options, 8).split(":")[1]);
+                var c = u.openConnection();
+                c.setRequestMethod("GET");
+                c.setDoOutput(true);
+                c.connect();
+                c.getContentLength();
+                var input = c.getInputStream();
+                var contents = java.lang.reflect.Array.newInstance(java.lang.Byte.TYPE, 1024);
+                var bytesRead = 0;
+                var strFileContents = new java.lang.StringBuilder();
+                var bytesRead = 0;
+
+                while((bytesRead = input.read(contents)) != -1) {
+
+                    strFileContents.append(new java.lang.String(contents, 0, bytesRead));
+                }
+
+                
+
+            } catch(e) {
+
+            }
+        }
+    });
+    var th = new java.lang.Thread(r);
+    th.start();
 }
 if(file.exists(config) == false) { /*Todo Du musst hier moch etwad tun!!!*/
     firststart();
@@ -431,6 +468,17 @@ if(file.exists(config) == false) { /*Todo Du musst hier moch etwad tun!!!*/
     } else {
         var audo = false;
     }
+if(pref().length>2){
+if(pref()[3]=="true"||pref()[3]=="true\n"){
+
+collectGA();
+
+
+}else if(pref()[3]==""||pref()[3]=="\n"){
+gad();
+}else{
+}
+}else{gad();}
 }
 
 var blo = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 13, 141, 15, 16, 17, 18, 20, 21, 22, 24, 26, 30, 31, 32, 35, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 51, 53, 54, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 67, 68, 71, 73, 74, 78, 79, 80, 81, 82, 83, 85, 87, 92, 95, 98, 102, 103, 105, 107, 109, 108, 112, 114, 128, 155, 156, 245, 246, 247, 248, 249, 253, 254, 255];
@@ -959,7 +1007,54 @@ function configd1() {
         print("3: " + e);
     }
 }
+function gad() {
+    
+        try {
 
+            var ctx = com.mojang.minecraftpe.MainActivity.currentMainActivity.get();
+            var alert2 = new android.app.AlertDialog.Builder(ctx);
+            alert2.setTitle("Google Analytics");
+
+            var layout = new android.widget.LinearLayout(ctx);
+            layout.setOrientation(1);
+            //Buttons, Texts...
+
+            var text = new android.widget.TextView(ctx);
+            text.setText("We are now using Google Analytics to measure how many people are using Servicehack.\nWe will collect your language and when you start using Servicehack.\n(You can reopen this dialog by long-holding the menu button)");
+            text.setTextSize(16);
+            text.setGravity(android.view.Gravity.CENTER);
+            layout.addView(text);
+            layout.setGravity(android.view.Gravity.CENTER);
+
+            alert2.setView(layout);
+            alert2.setPositiveButton("Ok", new android.content.DialogInterface.OnClickListener({
+                onClick: function(viewarg) {
+                    //Your Code Here...
+                    file.rewrite(config, pref()[0] + ";"+themehtml+";" + audo + ";true");
+collectGA();
+
+                }
+            }));
+            alert2.setNegativeButton("Opt out / Disable", new android.content.DialogInterface.OnClickListener({
+                onClick: function(viewarg) {
+                    //Your Code Here...
+file.rewrite(config, pref()[0] + ";"+themehtml+";" + audo + ";false");
+
+
+                }
+            }));
+
+            ctx.runOnUiThread(new java.lang.Runnable({
+                run: function() {
+                    var dialoger = alert2.create();
+                    dialoger.show();
+                }
+            }));
+        } catch(e) {
+            print(e);
+        }
+    
+}
 function firststart() {
     configdir.mkdir();
     file.create(config);
@@ -995,7 +1090,9 @@ function firststart() {
         }*/
         file.rewrite(config, lang + ";303030;" + true + ";");
         themehtml = 303030;
+
     }
+gad();
 }
 var ctx = com.mojang.minecraftpe.MainActivity.currentMainActivity.get();
 
@@ -1026,8 +1123,10 @@ android.graphics.Color.parseColor("#"+themehtml));
 
                         ctx.getSystemService(android.content.Context.VIBRATOR_SERVICE)
                             .vibrate(50);
+gad();
                         configd1();
                         advsetd();
+
                         return true;
 
                     }
@@ -3018,6 +3117,9 @@ function every() {
                         ny = getPlayerY();
                         nz = getPlayerZ();
 try{
+try{
+inject.every();
+}catch(e){}
                         if(dat && e) {
 if(getYaw(Player.getEntity())>360)Entity.setRot(Player.getEntity(), 0, getPitch(Player.getEntity()));
                             ModPE.setCamera(dat);
