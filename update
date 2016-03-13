@@ -201,6 +201,8 @@ ModPE.callCommand = function(command) {
 };
 //variablen variables
 
+var tick = 0;
+
 var nightvis = 0;
 var gamespeed = 4;
 var fly = Player.canFly();
@@ -220,6 +222,8 @@ var wallh = false;
 var aimbot = false;
 var aimtarget = null;
 var spider = false;
+var jrcheat = false;
+var speed = 0;
 
 var inject = {
 every:function(){}
@@ -270,7 +274,7 @@ var desc = {
 		wallhack:{
 			title:"Wall Hack",
 			desc:"It let you walk through blocks.\n Don't forget that you get damage when walking through blocks",
-			servercomp:false
+			servercomp:true
 		},
 		freecam:{
 			title:"Freecam",
@@ -412,7 +416,7 @@ var options = new file.select(sdcard, "games/com.mojang/minecraftpe/options.txt"
 
 
 /*Example - write text*/
-var ver = "0.11.6";
+var ver = "0.11.7";
 //Language
 function pref() {
     try {
@@ -1254,12 +1258,14 @@ function hackmenu(which) {
                 var menuScroll = new android.widget.HorizontalScrollView(ctx);
                 var menuLayout1 = new android.widget.LinearLayout(ctx);
                 var menuLayout2 = new android.widget.LinearLayout(ctx);
+                
 
                 menuLayout.setOrientation(0);
 
                 menuLayout1.setOrientation(1);
 
-                menuLayout2.setOrientation(1);
+                menuLayout2.setOrientation(0);
+
             } catch(e) {
                 print("Linear Fail :" + e);
             }
@@ -1408,7 +1414,7 @@ clientMessage("\1");
 							
 				
 	           			//Hacks
-
+var v = new android.view.ViewGroup.LayoutParams(-2, -2);
 
                 var textgamesped = new android.widget.TextView(ctx);
                 var sw = ((gamespeed + 3) * 5);
@@ -1416,6 +1422,7 @@ clientMessage("\1");
                 textgamesped.setGravity(textgravity);
                 textgamesped.setTextSize(textsize);
                 textgamesped.setTextColor(textcolor);
+
                 var seekgamespeed = new android.widget.SeekBar(ctx);
                 seekgamespeed.setMax(13);
 
@@ -1434,6 +1441,27 @@ clientMessage("\1");
                         }
                     }
                 }));
+
+var btnspeed = newSpriteButton(desc.unknown);
+var sp = "normal";
+if(speed==1)sp="fast";
+if(speed==2)sp="super fast";
+if(speed==3)sp="sonic";
+btnspeed.setText("Speed:\n"+sp);
+btnspeed.setOnClickListener(new android.view.View.OnClickListener({
+                    onClick: function(viewarg) {
+speed++;
+if(speed>3)speed=0;
+var sp = "normal";
+if(speed==1)sp="fast";
+if(speed==2)sp="super fast";
+if(speed==3)sp="sonic";
+btnspeed.setText("Speed:\n"+sp);
+updateSpeed();
+}}));
+var v = new android.view.ViewGroup.LayoutParams(-2, -2);
+btnspeed.setLayoutParams(v);
+
                 var btngamemode = newSpriteButton(desc.hack.gm);
                 gamemode = Level.getGameMode();
                 btngamemode.setText(lamg[lang][6][gamemode]);
@@ -1682,11 +1710,11 @@ print(e);
                         if(!wallh) {
                             btnwallh.setText("WallHack: " + lamg[lang][9][0]);
                             wallh = true;
-                            Entity.setCollisionSize(Player.getEntity(), 0, 0);
+                            
                         } else {
                             btnwallh.setText("WallHack: " + lamg[lang][9][1]);
                             wallh = false;
-                            Entity.setCollisionSize(Player.getEntity(), 1, 2);
+                            
                         }
                     }
                 }));
@@ -1708,6 +1736,27 @@ aimbot=true;
                 } else {
                     btnaimbot.setText("BowAimbot: " + lamg[lang][9][1]);
 aimbot = false;
+
+                }
+}}));
+                var btnjrcheat = newSpriteButton(desc.unknown);
+                if(!jrcheat) {
+                    btnjrcheat.setText("JRHack: " + lamg[lang][9][1]);
+
+                } else {
+                    btnjrcheat.setText("JRHack: " + lamg[lang][9][0]);
+
+
+                }
+
+                btnjrcheat.setOnClickListener(new android.view.View.OnClickListener({
+                    onClick: function(viewarg) {
+if(!jrcheat) {
+                    btnjrcheat.setText("JRCheat: " + lamg[lang][9][0]);
+jrcheat=true;
+                } else {
+                    btnjrcheat.setText("JRCheat: " + lamg[lang][9][1]);
+jrcheat = false;
 
                 }
 }}));
@@ -1782,8 +1831,11 @@ aimbot = false;
                     menuLayout2.setOrientation(1);
                     menuLayout2.addView(textgamesped);
                     menuLayout2.addView(seekgamespeed);
+                   
                     menuLayout.addView(newbigplaceholder());
                     menuLayout.addView(btngamemode);
+                    menuLayout.addView(newplaceholder());
+                    menuLayout.addView(btnspeed);
                     menuLayout.addView(newplaceholder());
                     menuLayout.addView(btnfly);
                     menuLayout.addView(newplaceholder());
@@ -1797,11 +1849,13 @@ aimbot = false;
                     menuLayout.addView(newplaceholder());
                     menuLayout.addView(btnxray);
                     menuLayout.addView(newplaceholder());
-		    menuLayout.addView(btnwallh);
+		                  menuLayout.addView(btnwallh);
                     menuLayout.addView(newplaceholder());
                     menuLayout.addView(btnfreecam);
                     menuLayout.addView(newplaceholder());
                     menuLayout.addView(btnaimbot);
+                    menuLayout.addView(newplaceholder());
+                    menuLayout.addView(btnjrcheat);
                     menuLayout.addView(newbigplaceholder());
                 }
                 if(which == 2) {
@@ -3105,7 +3159,21 @@ function entityRemovedHook(entity) {
         imob = 1;
     }
 }
+function useItem(x, y, z, itemId, blockId, side)
+{
+	if(jrcheat){
+var p = Player.getEntity();
+	setVelX(p, ((x+0.5-getPlayerX())/5));
+if(((y+2.55-getPlayerY())/5)+0.425<0){
+	setVelY(p, ((y+2.55-getPlayerY())/5)+0.7);
+	}else{
+setVelY(p, ((y+2.55-getPlayerY())/5)+0.425);
+}
+setVelZ(p, ((z+0.5-getPlayerZ())/5));
 
+}
+}
+var tick = 0;
 function every() {
     ctx.runOnUiThread(new java.lang.Runnable({
         run: function() {
@@ -3116,6 +3184,11 @@ function every() {
                         nx = getPlayerX();
                         ny = getPlayerY();
                         nz = getPlayerZ();
+tick++;
+if(tick>=3000){
+tick = 0;
+collectGA();
+}
 try{
 try{
 inject.every();
@@ -3289,6 +3362,31 @@ aimAt(mobs[i]);
 }
 }
 }
+if(wallh){
+
+if(tick>=20)tick=0;
+		if(tick==0){
+for(var i = 0; i<=256;i++){
+if(i==26){
+Block.setShape(i, 0.001, 0, 0.001, 0.999, 0.56, 0.999);
+}else{
+	Block.setShape(i, 0.001, 0, 0.001, 0.999, 1, 0.999);
+	}
+	}}
+	if(tick!=0&&tick<=10){
+
+for(var i = 0; i<=256;i++){
+if(i==26){
+Block.setShape(i, 0, 0, 0, 1, 0.56, 1);
+}else{
+	Block.setShape(i, 0, 0, 0, 1, 1, 1);
+	}
+	}}
+	
+		
+
+		tick++;
+}
                         ModPE.langEdit("menu.copyright", "Servicehack by GodSoft029");
                         ModPE.langEdit("playscreen.header.local", "Choose world to §cHack");
                         ModPE.langEdit("createWorldScreen.progress.local", "Generating new hacked world...");
@@ -3377,6 +3475,11 @@ function randomdialog() {
         }
     }
 }
-
+function updateSpeed(){
+for(var i = 0; i<=256; i++){
+	Block.setFriction(i,0.1*(5.1-speed/2));
+	
+	}
+}
 randomdialog();
 
