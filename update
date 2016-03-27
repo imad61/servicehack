@@ -401,7 +401,7 @@ function newSpriteButton(desc) {
     btn.setTextColor(android.graphics.Color.WHITE);
     btn.setBackgroundDrawable(new android.graphics.drawable.BitmapDrawable(btg));
     btn.getBackground().setAlpha(240);
-    if(desc.servercomp == false && online && Player.getEntitiy()!=0) {
+    if(desc.servercomp == false && online) {
         btn.getBackground().setAlpha(100);
         //btn.setClickable(false);
     }
@@ -467,7 +467,7 @@ var clientId = new file.select(sdcard, "/games/com.mojang/minecraftpe/clientId.t
 var configdir = new file.select(sdcard, "/games/com.mojang/servicehack/");
 var options = new file.select(sdcard, "games/com.mojang/minecraftpe/options.txt");
 /*Example - write text*/
-var ver = "0.11.9";
+var ver = "0.11.10";
 //Language
 function pref() {
     try {
