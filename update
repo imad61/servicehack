@@ -3856,7 +3856,7 @@ function enchanter(slot) {
             var  Infinity = new android.widget.LinearLayout(ctx); 
             Infinity.setOrientation(0);
             var  Infinity1 = new android.widget.CheckBox(ctx);  
-            Infinity1.setText(ModPE.getI18n("enchantment.arrowInfinite"));  
+            Infinity1.setText(ModPE.getI18n("enchantment.arrowInfinite"));
             Infinity1.setOnClickListener(new android.view.View.OnClickListener({
                 onClick: function(viewarg) {
 
