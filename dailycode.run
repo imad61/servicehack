@@ -1,3 +1,4 @@
 try {
 lsd = true;
+toast ("April Fools!",1);
 }catch (e){}
