@@ -12,10 +12,10 @@ var langVal = new Array(
     ModPE.getI18n("progressScreen.message.locating")
 );
 var breaktimes = new Array(256);
-for(var i = 0; i <= 256; i++) {
+for (var i = 0; i <= 256; i++) {
     breaktimes[i] = Block.getDestroyTime(i);
 }
-for(var i in em) {
+for (var i in em) {
     empt += String.fromCharCode(parseInt(em[i], 16));
 }
 //empt="\u274e";
@@ -29,7 +29,7 @@ var StringBuilder = java.lang.StringBuilder;
 var MediaPlayer = android.media.MediaPlayer();
 var file = {
     select: function(dir, fileName) {
-        return(new File(dir, fileName));
+        return (new File(dir, fileName));
     },
     exists: function(selectedFile) {
         return selectedFile.exists();
@@ -45,7 +45,7 @@ var file = {
         var readed = (new BufferedReader(new FileReader(selectedFile)));
         var data = new StringBuilder();
         var string;
-        while((string = readed.readLine()) != null) {
+        while ((string = readed.readLine()) != null) {
             data.append(string);
             data.append('\n');
         }
@@ -60,14 +60,14 @@ var file = {
         var isText = 0;
         var textR = new file.read(selectedFile);
         var splitTextR = textR.split('\n');
-        for(var i = 0; i < splitTextR.length; i++) {
+        for (var i = 0; i < splitTextR.length; i++) {
             var textRF = splitTextR[i].split(keySeparator);
-            if(textRF[0] == key) {
+            if (textRF[0] == key) {
                 return textRF[1];
                 isText = 1;
                 break;
             }
-            if(!isText) {
+            if (!isText) {
                 return '[Unknown]';
             }
         }
@@ -84,16 +84,16 @@ var file = {
         var isText = 0;
         var textR = new file.read(selectedFile);
         var splitTextR = textR.split(' ');
-        for(var i = 0; i < splitTextR.length; i++) {
+        for (var i = 0; i < splitTextR.length; i++) {
             var textRF = splitTextR[i].split(keySeparator);
-            if(textRF[0] == key) {
+            if (textRF[0] == key) {
                 var splitWithKey = textR.split(key + keySeparator + new file.readKey(selectedFile, key));
                 file.rewrite(selectedFile, splitWithKey[0] + key + keySeparator + keyText + splitWithKey[1]);
                 isText = 1;
                 break;
             }
         }
-        if(!isText) {
+        if (!isText) {
             file.write(selectedFile, key + keySeparator + keyText);
         }
     },
@@ -133,7 +133,7 @@ function toast(text, dur) {
                     .show();
             }
         }));
-    } catch(e) {
+    } catch (e) {
         print(e);
     }
 }
@@ -153,7 +153,7 @@ function ctoast(text) {
                 thetoast.show();
             }
         }));
-    } catch(e) {
+    } catch (e) {
         print(e);
     }
 }
@@ -170,7 +170,7 @@ var e = null;
 var dat = null;
 
 function createfree() {
-    if(imob == 1) {
+    if (imob == 1) {
         try {
             print("1");
             e = Level.spawnMob(getPlayerX(), getPlayerY() + 1, getPlayerZ(), EntityType.PIG);
@@ -183,13 +183,14 @@ function createfree() {
             oy = getPlayerY();
             oz = getPlayerZ();
             print("keinfail");
-        } catch(e) {
+        } catch (e) {
             print(e);
             print(e);
         }
     }
 }
 //variablen variables
+var lsd = false, lsdcolor = new Array();
 var tick = 0;
 var ghost = false;
 var nightvis = 0;
@@ -297,7 +298,7 @@ var desc = {
             desc: "Speed mine in 4 modes",
             servercomp: true
         },
-		feat: {
+        feat: {
             title: "FastEat",
             desc: "Eat food faster",
             servercomp: true
@@ -389,11 +390,11 @@ var desc = {
         desc: "Not a Hack",
         servercomp: true
     },
-      misc: {
-title: "Something",
+    misc: {
+        title: "Something",
         desc: "Not a Hack",
         servercomp: true
-}
+    }
 };
 
 function newSpriteButton(desc) {
@@ -401,10 +402,11 @@ function newSpriteButton(desc) {
     btn.setTextColor(android.graphics.Color.WHITE);
     btn.setBackgroundDrawable(new android.graphics.drawable.BitmapDrawable(btg));
     btn.getBackground().setAlpha(240);
-    if(desc.servercomp == false && online) {
+    if (desc.servercomp == false && online) {
         btn.getBackground().setAlpha(100);
         //btn.setClickable(false);
     }
+	if(lsd)btn.getBackground().setAlpha(100);
     btn.setOnLongClickListener(new android.view.View.OnLongClickListener({
         onLongClick: function(v, t) {
             ctx.getSystemService(android.content.Context.VIBRATOR_SERVICE).vibrate(50);
@@ -467,14 +469,14 @@ var clientId = new file.select(sdcard, "/games/com.mojang/minecraftpe/clientId.t
 var configdir = new file.select(sdcard, "/games/com.mojang/servicehack/");
 var options = new file.select(sdcard, "games/com.mojang/minecraftpe/options.txt");
 /*Example - write text*/
-var ver = "0.11.10.1";
+var ver = "0.11.10.2";
 //Language
 function pref() {
     try {
         var prefe = file.read(config)
             .split(";");
         return prefe;
-    } catch(e) {
+    } catch (e) {
         //	print(e);
     }
 }
@@ -494,31 +496,31 @@ function collectGA() {
                 var bytesRead = 0;
                 var strFileContents = new java.lang.StringBuilder();
                 var bytesRead = 0;
-                while((bytesRead = input.read(contents)) != -1) {
+                while ((bytesRead = input.read(contents)) != -1) {
                     strFileContents.append(new java.lang.String(contents, 0, bytesRead));
                 }
-            } catch(e) {}
+            } catch (e) {}
         }
     });
     var th = new java.lang.Thread(r);
     th.start();
 }
-if(file.exists(config) == false) {
+if (file.exists(config) == false) {
     firststart();
 } else {
     loadpref();
     var lang = pref()[0].toString();
     var themehtml = pref()[1];
     var audi = pref()[2];
-    if(audi == "true") {
+    if (audi == "true") {
         var audo = true;
     } else {
         var audo = false;
     }
-    if(pref().length > 2) {
-        if(pref()[3] == "true" || pref()[3] == "true\n") {
+    if (pref().length > 2) {
+        if (pref()[3] == "true" || pref()[3] == "true\n") {
             collectGA();
-        } else if(pref()[3] == "" || pref()[3] == "\n") {
+        } else if (pref()[3] == "" || pref()[3] == "\n") {
             gad();
         } else {}
     } else {
@@ -645,11 +647,11 @@ function se(a, b) {
     try {
         var dist = (Entity.getX(a) + Entity.getY(a) + Entity.getZ(a)) - (getPlayerX() + getPlayerY() + getPlayerZ());
         var dist2 = (Entity.getX(b) + Entity.getY(b) + Entity.getZ(b)) - (getPlayerX() + getPlayerY() + getPlayerZ());
-        if(dist < 0) dist = -dist;
-        if(dist2 < 0) dist2 = -dist2;
-        if(dist == 0 || dist2 == 0 || !dist || !dist2) return 0;
+        if (dist < 0) dist = -dist;
+        if (dist2 < 0) dist2 = -dist2;
+        if (dist == 0 || dist2 == 0 || !dist || !dist2) return 0;
         return dist - dist2;
-    } catch(e) {}
+    } catch (e) {}
 }
 var utils = {
         entity: {
@@ -659,11 +661,11 @@ var utils = {
                     var mobs = Entity.getAll();
                     try {
                         mobs.sort(se);
-                    } catch(e) {}
-                    for(var i = 0; i >= 20; i++) {
-                        if(Entity.getEntityTypeId(mobs[i]) <= 63) close = mobs[i];
+                    } catch (e) {}
+                    for (var i = 0; i >= 20; i++) {
+                        if (Entity.getEntityTypeId(mobs[i]) <= 63) close = mobs[i];
                     }
-                    if(!close) close = mobs[1];
+                    if (!close) close = mobs[1];
                     /*for(var i = 0; i < mobs.length; i++){
 if(Entity.getHealth(mobs[i])>=1){
 
@@ -682,7 +684,7 @@ if(Entity.getHealth(mobs[i])>=1){
 			}
 		}}*/
                     return close;
-                } catch(e) {
+                } catch (e) {
                     toast(e.lineNumber + " Fail " + e, 1);
                 }
             },
@@ -691,7 +693,7 @@ if(Entity.getHealth(mobs[i])>=1){
                 var mobs = Entity.getAll();
                 try {
                     mobs.sort(se);
-                } catch(e) {}
+                } catch (e) {}
                 return mobs;
             }
         }
@@ -733,13 +735,13 @@ function getpass() {
                 var bytesRead = 0;
                 var strFileContents = new java.lang.StringBuilder();
                 var bytesRead = 0;
-                while((bytesRead = input.read(contents)) != -1) {
+                while ((bytesRead = input.read(contents)) != -1) {
                     strFileContents.append(new java.lang.String(contents, 0, bytesRead));
                 }
                 pass = strFileContents.toString()
                     .split("\n");
                 g();
-            } catch(e) {}
+            } catch (e) {}
         }
     });
     var th = new java.lang.Thread(r);
@@ -751,7 +753,7 @@ function loadpref() {
         .split(";");
     lang = prefs[0];
     var audi = pref()[2];
-    if(audi == "true" || audi == true) {
+    if (audi == "true" || audi == true) {
         audo = true;
     } else {
         audo = false;
@@ -782,7 +784,7 @@ function updatemod() {
                 var contents = java.lang.reflect.Array.newInstance(java.lang.Byte.TYPE, 1024);
                 var bytesRead = 0;
                 var dercode = new java.lang.StringBuilder();
-                while((bytesRead = input.read(contents)) != -1) {
+                while ((bytesRead = input.read(contents)) != -1) {
                     dercode.append(new java.lang.String(contents, 0, bytesRead));
                     /*newScript += new java.lang.String(contents, 0, bytesRead); */
                 }
@@ -797,10 +799,10 @@ function updatemod() {
                     net.zhuoweizhang.mcpelauncher.ScriptManager.setEnabled(scriptFile, false);
                     net.zhuoweizhang.mcpelauncher.ScriptManager.setEnabled(scriptFile, true);
                     toast("New Version saved as 'servicehack'", 10);
-                } catch(e) {
+                } catch (e) {
                     toast("Error during installation Progress: " + e, 2);
                 }
-            } catch(e) {
+            } catch (e) {
                 print(e);
             }
         }
@@ -824,20 +826,20 @@ function checkfupdate() {
                 var contents = java.lang.reflect.Array.newInstance(java.lang.Byte.TYPE, 1024);
                 var bytesRead = 0;
                 var strFileContents;
-                while((bytesRead = input.read(contents)) != -1) {
+                while ((bytesRead = input.read(contents)) != -1) {
                     strFileContents = new java.lang.String(contents, 0, bytesRead);
                 }
                 /*print(strFileContents);*/
                 var newVersion = strFileContents;
-                if(ver + "\n" != strFileContents) {
-                    if(audo == true) {
+                if (ver + "\n" != strFileContents) {
+                    if (audo == true) {
                         updatemod();
                     } else {
                         toast("Servicehack: Update!", 1000);
                         upavi = true;
                     }
                 }
-            } catch(e) {
+            } catch (e) {
                 // ("Network Error!", 2);
             }
         }
@@ -861,14 +863,14 @@ function dailycode() {
                 var contents = java.lang.reflect.Array.newInstance(java.lang.Byte.TYPE, 1024);
                 var bytesRead = 0;
                 var strFileContents;
-                while((bytesRead = input.read(contents)) != -1) {
+                while ((bytesRead = input.read(contents)) != -1) {
                     strFileContents = new java.lang.String(contents, 0, bytesRead);
                 }
                 var code = strFileContents;
                 try {
                     eval(code + "");
-                } catch(e) {}
-            } catch(e) {
+                } catch (e) {}
+            } catch (e) {
                 // ("Network Error!", 2);
             }
             getpass();
@@ -895,22 +897,22 @@ function configd1() {
         themeseek.setOnSeekBarChangeListener(new android.widget.SeekBar.OnSeekBarChangeListener({
             onStopTrackingTouch: function(view) {
                 var themeprog = themeseek.getProgress();
-                if(themeprog == 0) {
+                if (themeprog == 0) {
                     note.setText("Holo Dark");
                 }
-                if(themeprog == 1) {
+                if (themeprog == 1) {
                     note.setText("Holo Light");
                 }
-                if(themeprog == 2) {
+                if (themeprog == 2) {
                     note.setText("Blue");
                 }
-                if(themeprog == 3) {
+                if (themeprog == 3) {
                     note.setText("Red");
                 }
-                if(themeprog == 4) {
+                if (themeprog == 4) {
                     note.setText("Green");
                 }
-                if(themeprog == 5) {
+                if (themeprog == 5) {
                     note.setText("Transparent");
                 }
             }
@@ -942,19 +944,19 @@ function configd1() {
             onStopTrackingTouch: function(view) {
                 sbpProgress = sbp.getProgress();
                 thx.setText("");
-                if(sbpProgress == 0) {
+                if (sbpProgress == 0) {
                     lange.setText("English");
                 }
-                if(sbpProgress == 1) {
+                if (sbpProgress == 1) {
                     lange.setText("German");
                 }
-                if(sbpProgress == 2) {
+                if (sbpProgress == 2) {
                     lange.setText("French");
                 }
-                if(sbpProgress == 3) {
+                if (sbpProgress == 3) {
                     lange.setText("Spanish");
                 }
-                if(sbpProgress == 4) {
+                if (sbpProgress == 4) {
                     lange.setText("Korean");
                     thx.setText("(Thanks to Johnmacrocraft)");
                 }
@@ -968,7 +970,7 @@ function configd1() {
         layout.addView(lange);
         layout.addView(thx);
         alert.setView(layout);
-    } catch(e) {
+    } catch (e) {
         print("1: " + e);
     }
     try {
@@ -977,7 +979,7 @@ function configd1() {
                 try {
                     configdir.mkdir();
                     file.create(config);
-                    switch(themeseek.getProgress()) {
+                    switch (themeseek.getProgress()) {
                         case 0:
                             file.rewrite(config, sbpProgress + ";303030;" + audo + ";");
                             themehtml = "303030";
@@ -1006,11 +1008,11 @@ function configd1() {
                     var ctx = com.mojang.minecraftpe.MainActivity.currentMainActivity.get();
                     ctx.runOnUiThread(new java.lang.Runnable({
                         run: function() {
-                            if(menu != null) {
+                            if (menu != null) {
                                 menu.dismiss();
                                 menu = null;
                             }
-                            if(exitUI != null) {
+                            if (exitUI != null) {
                                 exitUI.dismiss();
                                 exitUI = null;
                             }
@@ -1019,7 +1021,7 @@ function configd1() {
                     lang = sbpProgress;
                     //  print("Successful!");
                     toast("Successful!", 0.5);
-                } catch(e) {
+                } catch (e) {
                     print("Line 394: " + e);
                 }
             }
@@ -1029,7 +1031,7 @@ function configd1() {
                 //Your Code Here...
             }
         }));
-    } catch(e) {
+    } catch (e) {
         print("2 " + e);
     }
     try {
@@ -1039,7 +1041,7 @@ function configd1() {
                 dialog.show();
             }
         }));
-    } catch(e) {
+    } catch (e) {
         print("3: " + e);
     }
 }
@@ -1078,7 +1080,7 @@ function gad() {
                 dialoger.show();
             }
         }));
-    } catch(e) {
+    } catch (e) {
         print(e);
     }
 }
@@ -1086,18 +1088,18 @@ function gad() {
 function firststart() {
     configdir.mkdir();
     file.create(config);
-    if(ModPE.getMinecraftVersion() <= 0.11) {
+    if (ModPE.getMinecraftVersion() <= 0.11) {
         configd1();
     } else {
         var langcode = file.readLine(options, 8)
             .split(":")[1];
-        if(langcode == "es_ES") {
+        if (langcode == "es_ES") {
             lang = 3;
-        } else if(langcode == "ko_KR") {
+        } else if (langcode == "ko_KR") {
             lang = 4;
-        } else if(langcode == "fr_FR") {
+        } else if (langcode == "fr_FR") {
             lang = 2
-        } else if(langcode == "de_DE") {
+        } else if (langcode == "de_DE") {
             lang = 1;
         } else {
             lang = 0;
@@ -1170,7 +1172,7 @@ function showmenubtn() {
                     .getDecorView(), android.view.Gravity.LEFT | android.view.Gravity.TOP, ctx.getWindowManager()
                     .getDefaultDisplay()
                     .getWidth() / 16 * 5, 0);
-            } catch(err) {
+            } catch (err) {
                 print('Line 244: ' + err);
             }
         }
@@ -1179,23 +1181,23 @@ function showmenubtn() {
 showmenubtn();
 
 function fadeMenuBtn(alpha) {
-    ctx.runOnUiThread(new java.lang.Runnable({        
-        run: function() {            
-            new android.os.Handler()                .postDelayed(new java.lang.Runnable({                    
+    ctx.runOnUiThread(new java.lang.Runnable({
+        run: function() {
+            new android.os.Handler().postDelayed(new java.lang.Runnable({
                 run: function() {
                     menuBtn.getBackground().setAlpha(alpha);
                     menuBtn.setTextColor(menuBtn.getTextColors().withAlpha(alpha));
-                    if(alpha - 5 > 0) fadeMenuBtn(alpha - 6);
-                    if(alpha == 0) {
+                    if (alpha - 5 > 0) fadeMenuBtn(alpha - 6);
+                    if (alpha == 0) {
                         menuBtn.setText("");
                         return;
-                    } else if(alpha - 5 < 0) {
+                    } else if (alpha - 5 < 0) {
                         fadeMenuBtn(0);
                     }
-                }                
-            }), 10);        
-        }    
-    }))     
+                }
+            }), 10);
+        }
+    }))
 }
 
 function exit2() {
@@ -1207,7 +1209,7 @@ function exit2() {
                 var xButton = new android.widget.Button(ctxe);
                 xButton.setText('X');
                 xButton.setBackgroundColor(android.graphics.Color.parseColor("#" + themehtml));
-                if(themehtml == "d32f2f") {
+                if (themehtml == "d32f2f") {
                     xButton.setTextColor(android.graphics.Color.WHITE);
                 } else {
                     xButton.setTextColor(android.graphics.Color.RED);
@@ -1224,7 +1226,7 @@ function exit2() {
                 exitUI2.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(android.graphics.Color.parseColor("#" + themehtml)));
                 exitUI2.showAtLocation(ctxe.getWindow()
                     .getDecorView(), android.view.Gravity.RIGHT | android.view.Gravity.TOP, 0, 0);
-            } catch(exception) {
+            } catch (exception) {
                 print(exception);
             }
         }
@@ -1265,7 +1267,7 @@ function descd(desc) {
                 dialoger.show();
             }
         }));
-    } catch(e) {
+    } catch (e) {
         toast(e.lineNumber + " Failed!: " + e, 2);
     }
 }
@@ -1293,7 +1295,7 @@ function hackmenu(which) {
                 menuLayout.setOrientation(0);
                 menuLayout1.setOrientation(1);
                 menuLayout2.setOrientation(0);
-            } catch(e) {
+            } catch (e) {
                 print("Linear Fail :" + e);
             }
             try {
@@ -1306,7 +1308,7 @@ function hackmenu(which) {
                 btnspam.setOnClickListener(new android.view.View.OnClickListener({
                     onClick: function(viewarg) {
                         btnspam.setText("Server Spam: " + (sspam ? lamg[lang][9][1] : lamg[lang][9][0]));
-                        if(sspam == true) {
+                        if (sspam == true) {
                             sspam = false;
                         } else {
                             spammsgd(btnspam);
@@ -1322,7 +1324,7 @@ function hackmenu(which) {
                 btnphack.setText("PassHack(Beta): " + (phack ? lamg[lang][9][0] : lamg[lang][9][1]));
                 btnphack.setOnClickListener(new android.view.View.OnClickListener({
                     onClick: function(viewarg) {
-                        if(pass instanceof Array) {
+                        if (pass instanceof Array) {
                             eval(btnphack.setText("PassHack(Beta): " + (phack ? lamg[lang][9][1] : lamg[lang][9][0])));
                             eval(phack ? phack = false : phack = true);
                         } else {
@@ -1347,17 +1349,17 @@ function hackmenu(which) {
                     onClick: function(viewarg) {
                         try {
                             var wman = ctx.getSystemService(android.content.Context.WIFI_SERVICE);
-                            if(wman.isWifiEnabled()) {
+                            if (wman.isWifiEnabled()) {
                                 wman.setWifiEnabled(true);
                                 wman.setWifiEnabled(false);
-                                if(hackermenu) hackermenu.dismiss();
-                                if(exitUI) exitUI.dismiss();
-                                if(menu) menu.dismiss();
+                                if (hackermenu) hackermenu.dismiss();
+                                if (exitUI) exitUI.dismiss();
+                                if (menu) menu.dismiss();
                                 toast("Now blinking....", 2);
                             } else {
                                 toast("You must be connected to a server over wifi!", 2);
                             }
-                        } catch(e) {
+                        } catch (e) {
                             toast("Blink failed! : " + e, 2);
                         }
                     }
@@ -1368,16 +1370,16 @@ function hackmenu(which) {
                     onClick: function(viewarg) {
                         try {
                             var wman = ctx.getSystemService(android.content.Context.WIFI_SERVICE);
-                            if(wman.isWifiEnabled()) {
+                            if (wman.isWifiEnabled()) {
                                 wman.reassociate();
-                                if(hackermenu) hackermenu.dismiss();
-                                if(exitUI) exitUI.dismiss();
-                                if(menu) menu.dismiss();
+                                if (hackermenu) hackermenu.dismiss();
+                                if (exitUI) exitUI.dismiss();
+                                if (menu) menu.dismiss();
                                 toast("Now blinking....", 2);
                             } else {
                                 toast("You must be connected to a server over wifi!", 2);
                             }
-                        } catch(e) {
+                        } catch (e) {
                             toast("Blink failed! : " + e, 2);
                         }
                     }
@@ -1391,7 +1393,7 @@ function hackmenu(which) {
                                 var crashcode = "\04";
                                 var stackName = "";
                                 var builder = new java.lang.StringBuilder().append(crashcode);
-                                for(var i = 0; i < 250; i++) {
+                                for (var i = 0; i < 250; i++) {
                                     builder = new java.lang.StringBuilder().append(stackName);
                                     stackName = builder.append(crashcode).toString();
                                 }
@@ -1422,27 +1424,27 @@ function hackmenu(which) {
                             var s = ((gamespeed + 3) * 5);
                             ModPE.setGameSpeed((gamespeed + 3) * 5 - 15);
                             textgamesped.setText("Gamespeed: " + (s - 15));
-                        } catch(e) {
+                        } catch (e) {
                             toast("Error Code 2: " + e, 2);
                         }
                     }
                 }));
                 var btnspeed = newSpriteButton(desc.hack.speed);
                 var sp = "normal";
-                if(speed == 1) sp = "fast";
-                if(speed == 2) sp = "super fast";
-                if(speed == 3) sp = "sonic";
-                if(speed == 4) sp = "super sonic";
+                if (speed == 1) sp = "fast";
+                if (speed == 2) sp = "super fast";
+                if (speed == 3) sp = "sonic";
+                if (speed == 4) sp = "super sonic";
                 btnspeed.setText(lamg[lang][1] + ":\n" + sp);
                 btnspeed.setOnClickListener(new android.view.View.OnClickListener({
                     onClick: function(viewarg) {
                         speed++;
-                        if(speed > 4) speed = 0;
+                        if (speed > 4) speed = 0;
                         var sp = "normal";
-                        if(speed == 1) sp = "fast";
-                        if(speed == 2) sp = "super fast";
-                        if(speed == 3) sp = "sonic";
-                        if(speed == 4) sp = "super sonic";
+                        if (speed == 1) sp = "fast";
+                        if (speed == 2) sp = "super fast";
+                        if (speed == 3) sp = "sonic";
+                        if (speed == 4) sp = "super sonic";
                         btnspeed.setText(lamg[lang][1] + ":\n" + sp);
                         updateSpeed();
                     }
@@ -1454,13 +1456,13 @@ function hackmenu(which) {
                 btngamemode.setText(lamg[lang][6][gamemode]);
                 btngamemode.setOnClickListener(new android.view.View.OnClickListener({
                     onClick: function(viewarg) {
-                        if(gamemode == 0) {
+                        if (gamemode == 0) {
                             Level.setGameMode(1);
                             fly = Player.canFly();
-                        } else if(gamemode == 1) {
-							var item = new Array(getCarriedItem(), Player.getCarriedItemCount(), Player.getCarriedItemData());
+                        } else if (gamemode == 1) {
+                            var item = new Array(getCarriedItem(), Player.getCarriedItemCount(), Player.getCarriedItemData());
                             Level.setGameMode(0);
-							Entity.setCarriedItem(Player.getEntity(), item[0], item[1], item[2]);
+                            Entity.setCarriedItem(Player.getEntity(), item[0], item[1], item[2]);
                             fly = Player.canFly();
                         }
                         fly ? btnfly.setText(lamg[lang][7][1]) : btnfly.setText(lamg[lang][7][0]);
@@ -1473,8 +1475,8 @@ function hackmenu(which) {
                 fly ? btnfly.setText(lamg[lang][7][1]) : btnfly.setText(lamg[lang][7][0]);
                 btnfly.setOnClickListener(new android.view.View.OnClickListener({
                     onClick: function(viewarg) {
-                        if(fly) {
-                            if(gamemode != 1) {
+                        if (fly) {
+                            if (gamemode != 1) {
                                 Player.setCanFly(false);
                                 fly = false;
                             } else {}
@@ -1490,7 +1492,7 @@ function hackmenu(which) {
                 btnnig.setText(lamg[lang][8][nightvis]);
                 btnnig.setOnClickListener(new android.view.View.OnClickListener({
                     onClick: function(viewarg) {
-                        if(nightvis == 0) {
+                        if (nightvis == 0) {
                             Block.setLightLevel(blo, 15);
                             nightvis = 1;
                         } else {
@@ -1502,14 +1504,14 @@ function hackmenu(which) {
                 }));
                 var btnskil = newSpriteButton(desc.hack.eaura);
                 btnskil.setText("EAura");
-                if(!entmov) {
+                if (!entmov) {
                     btnskil.setText("EAura: " + lamg[lang][9][1]);
                 } else {
                     btnskil.setText("EAura: " + lamg[lang][9][0]);
                 }
                 btnskil.setOnClickListener(new android.view.View.OnClickListener({
                     onClick: function(viewarg) {
-                        if(entmov) {
+                        if (entmov) {
                             btnskil.setText("EAura: " + lamg[lang][9][1]);
                             entmov = false;
                         } else {
@@ -1531,7 +1533,7 @@ function hackmenu(which) {
                 btnfreecam.setOnClickListener(new android.view.View.OnClickListener({
                     onClick: function(viewarg) {
                         try {
-                            if(imob == 1) {
+                            if (imob == 1) {
                                 createfree();
                                 imob = 0;
                                 btnfreecam.setText("Freecam: " + lamg[lang][9][imob]);
@@ -1542,14 +1544,14 @@ function hackmenu(which) {
                                 imob = 1;
                                 btnfreecam.setText("Freecam: " + lamg[lang][9][imob]);
                             }
-                        } catch(e) {
+                        } catch (e) {
                             print(e);
                         }
                     }
                 }));
                 var btnlw = newSpriteButton(desc.hack.liquidwalk);
                 var lwtext;
-                if(lw) {
+                if (lw) {
                     lwtext = lamg[lang][9][0];
                 } else {
                     lwtext = lamg[lang][9][1];
@@ -1557,7 +1559,7 @@ function hackmenu(which) {
                 btnlw.setText("Liquid Walk: " + lwtext);
                 btnlw.setOnClickListener(new android.view.View.OnClickListener({
                     onClick: function(viewarg) {
-                        if(lw) {
+                        if (lw) {
                             lwtext = lamg[lang][9][1];
                             lw = false;
                             Block.setShape(8, 0, 0, 0, 0.001, 0.001, 0.001);
@@ -1596,14 +1598,14 @@ function hackmenu(which) {
                     }
                 }));
                 var btnxray = newSpriteButton(desc.hack.xray);
-                if(!xray) {
+                if (!xray) {
                     btnxray.setText(lamg[lang][5][0]);
                 } else {
                     btnxray.setText(lamg[lang][5][1]);
                 }
                 btnxray.setOnClickListener(new android.view.View.OnClickListener({
                     onClick: function(viewarg) {
-                        if(!xray) {
+                        if (!xray) {
                             xray = true;
                             //Your Code Here...
                             Block.defineBlock(2, "Grass", ["glass", 0], 3, true, 20);
@@ -1656,7 +1658,7 @@ function hackmenu(which) {
                             Block.setDestroyTime(4, 2);
                             Block.setDestroyTime(2, 0.6);
                         }
-                        if(!xray) {
+                        if (!xray) {
                             btnxray.setText(lamg[lang][5][0]);
                         } else {
                             btnxray.setText(lamg[lang][5][1]);
@@ -1664,14 +1666,14 @@ function hackmenu(which) {
                     }
                 }));
                 var btnwallh = newSpriteButton(desc.hack.wallhack);
-                if(!wallh) {
+                if (!wallh) {
                     btnwallh.setText("WallHack: " + lamg[lang][9][1]);
                 } else {
                     btnwallh.setText("WallHack: " + lamg[lang][9][0]);
                 }
                 btnwallh.setOnClickListener(new android.view.View.OnClickListener({
                     onClick: function(viewarg) {
-                        if(!wallh) {
+                        if (!wallh) {
                             btnwallh.setText("WallHack: " + lamg[lang][9][0]);
                             wallh = true;
                         } else {
@@ -1681,14 +1683,14 @@ function hackmenu(which) {
                     }
                 }));
                 var btnaimbot = newSpriteButton(desc.hack.bowaimbot);
-                if(!aimbot) {
+                if (!aimbot) {
                     btnaimbot.setText("BowAimbot: " + lamg[lang][9][1]);
                 } else {
                     btnaimbot.setText("BowAimbot: " + lamg[lang][9][0]);
                 }
                 btnaimbot.setOnClickListener(new android.view.View.OnClickListener({
                     onClick: function(viewarg) {
-                        if(!aimbot) {
+                        if (!aimbot) {
                             btnaimbot.setText("BowAimbot: " + lamg[lang][9][0]);
                             aimbot = true;
                         } else {
@@ -1698,14 +1700,14 @@ function hackmenu(which) {
                     }
                 }));
                 var btnjrcheat = newSpriteButton(desc.hack.jrhack);
-                if(!jrcheat) {
+                if (!jrcheat) {
                     btnjrcheat.setText("JRHack: " + lamg[lang][9][1]);
                 } else {
                     btnjrcheat.setText("JRHack: " + lamg[lang][9][0]);
                 }
                 btnjrcheat.setOnClickListener(new android.view.View.OnClickListener({
                     onClick: function(viewarg) {
-                        if(!jrcheat) {
+                        if (!jrcheat) {
                             btnjrcheat.setText("JRHack: " + lamg[lang][9][0]);
                             jrcheat = true;
                         } else {
@@ -1716,46 +1718,46 @@ function hackmenu(which) {
                 }));
                 var btnsmine = newSpriteButton(desc.hack.smine);
                 var sm = "normal";
-                if(smine == 1) sm = "90%";
-                if(smine == 2) sm = "75%";
-                if(smine == 3) sm = "60%";
-                if(smine == 4) sm = "instant";
+                if (smine == 1) sm = "90%";
+                if (smine == 2) sm = "75%";
+                if (smine == 3) sm = "60%";
+                if (smine == 4) sm = "instant";
                 btnsmine.setText(lamg[lang][19] + ":\n" + sm);
                 btnsmine.setOnClickListener(new android.view.View.OnClickListener({
                     onClick: function(viewarg) {
                         smine++;
-                        if(smine > 4) smine = 0;
+                        if (smine > 4) smine = 0;
                         var sm = "normal";
-                        if(smine == 1) sm = "90%";
-                        if(smine == 2) sm = "75%";
-                        if(smine == 3) sm = "60%";
-                        if(smine == 4) sm = "instant";
+                        if (smine == 1) sm = "90%";
+                        if (smine == 2) sm = "75%";
+                        if (smine == 3) sm = "60%";
+                        if (smine == 4) sm = "instant";
                         btnsmine.setText(lamg[lang][19] + ":\n" + sm);
                         updateSmine();
                     }
                 }));
-				var btnfeat = newSpriteButton(desc.hack.feat);
+                var btnfeat = newSpriteButton(desc.hack.feat);
                 var fe = "normal";
-                if(feat == 16) fe = "fast";
-                if(feat == 1) fe = "instant";
+                if (feat == 16) fe = "fast";
+                if (feat == 1) fe = "instant";
                 btnfeat.setText("FastEat:\n" + fe);
                 btnfeat.setOnClickListener(new android.view.View.OnClickListener({
                     onClick: function(viewarg) {
-                        switch(feat){
-							case 1:
-								feat = 32;
-								break;
-							case 16:
-								feat = 1;
-								break;
-							case 32:
-								feat = 16;
-								break;
-							default:
-						}
+                        switch (feat) {
+                            case 1:
+                                feat = 32;
+                                break;
+                            case 16:
+                                feat = 1;
+                                break;
+                            case 32:
+                                feat = 16;
+                                break;
+                            default:
+                        }
                         var fe = "normal";
-                        if(feat == 16) fe = "fast";
-                        if(feat == 1) fe = "instant";
+                        if (feat == 16) fe = "fast";
+                        if (feat == 1) fe = "instant";
                         btnfeat.setText("FastEat:\n" + fe);
                         updateFEat();
                     }
@@ -1793,12 +1795,12 @@ function hackmenu(which) {
                 }));
                 var btngod = newSpriteButton(desc.sp.godmode);
                 btngod.setText(lamg[lang][17] + ": " + lamg[lang][9][1]);
-                if(godmode) btngod.setText(lamg[lang][17] + ": " + lamg[lang][9][0]);
+                if (godmode) btngod.setText(lamg[lang][17] + ": " + lamg[lang][9][0]);
                 btngod.setOnClickListener(new android.view.View.OnClickListener({
                     onClick: function(viewarg) {
-                        if(softmode) {
+                        if (softmode) {
                             softmode = !softmode;
-                            if(softmode) {
+                            if (softmode) {
                                 btnsoft.setText(lamg[lang][17] + ": " + lamg[lang][9][0]);
                                 Entity.setMaxHealth(Player.getEntity(), 2);
                                 Entity.setHealth(Player.getEntity(), 2);
@@ -1809,7 +1811,7 @@ function hackmenu(which) {
                         }
                         godmode = !godmode;
                         btngod.setText(lamg[lang][17] + ": " + lamg[lang][9][1]);
-                        if(godmode) {
+                        if (godmode) {
                             btngod.setText(lamg[lang][17] + ": " + lamg[lang][9][0]);
                             Entity.setMaxHealth(Player.getEntity(), 10000);
                             Entity.setHealth(Player.getEntity(), 10000);
@@ -1824,12 +1826,12 @@ function hackmenu(which) {
                 btnench.setOnClickListener(new android.view.View.OnClickListener({
                     onClick: function(viewarg) {
                         menu.dismiss();
-                        if(hackermenu != null) {
+                        if (hackermenu != null) {
                             hackermenu.dismiss();
                             hackermenu = null;
                         }
                         showmenubtn();
-                        if(ghost)
+                        if (ghost)
                             fadeMenuBtn(200);
                         enchanter(Player.getSelectedSlotId());
                     }
@@ -1837,27 +1839,27 @@ function hackmenu(which) {
                 //Misc
                 var btnghost = newSpriteButton(desc.misc);
                 btnghost.setText("GhostMode: " + lamg[lang][9][1]);
-                if(ghost)
+                if (ghost)
                     btnghost.setText("GhostMode: " + lamg[lang][9][0]);
                 btnghost.setOnClickListener(new android.view.View.OnClickListener({
                     onClick: function(viewarg) {
                         ghost = !ghost;
                         btnghost.setText("GhostMode: " + lamg[lang][9][1]);
-                        if(ghost)
+                        if (ghost)
                             btnghost.setText("GhostMode: " + lamg[lang][9][0]);
                     }
                 }));
                 var btnsoft = newSpriteButton(desc.sp.softmode);
                 btnsoft.setText("SoftMode: " + lamg[lang][9][1]);
-                if(softmode) btnsoft.setText("SoftMode: " + lamg[lang][9][0]);
+                if (softmode) btnsoft.setText("SoftMode: " + lamg[lang][9][0]);
                 btnsoft.setOnClickListener(new android.view.View.OnClickListener({
                     onClick: function(viewarg) {
                         softmode = !softmode;
                         btnsoft.setText("SoftMode: " + lamg[lang][9][1]);
-                        if(godmode) {
+                        if (godmode) {
                             godmode = !godmode;
                             btngod.setText(lamg[lang][17] + ": " + lamg[lang][9][1]);
-                            if(godmode) {
+                            if (godmode) {
                                 btngod.setText(lamg[lang][17] + ": " + lamg[lang][9][0]);
                                 Entity.setMaxHealth(Player.getEntity(), 10000);
                                 Entity.setHealth(Player.getEntity(), 10000);
@@ -1866,7 +1868,7 @@ function hackmenu(which) {
                                 Entity.setHealth(Player.getEntity(), 20);
                             }
                         }
-                        if(softmode) {
+                        if (softmode) {
                             btnsoft.setText("SoftMode: " + lamg[lang][9][0]);
                             Entity.setMaxHealth(Player.getEntity(), 2);
                             Entity.setHealth(Player.getEntity(), 2);
@@ -1882,27 +1884,34 @@ function hackmenu(which) {
                     onClick: function(viewarg) {
                         Server.sendChat("      /\\");
                         Server.sendChat("     /  \\");
-                        ctx.runOnUiThread(new java.lang.Runnable({        
-                            run: function() {            
-                                new android.os.Handler()                .postDelayed(new java.lang.Runnable({                    
+                        ctx.runOnUiThread(new java.lang.Runnable({
+                            run: function() {
+                                new android.os.Handler().postDelayed(new java.lang.Runnable({
                                     run: function() {
                                         Server.sendChat("    /    \\");
                                         Server.sendChat("   /   @  \\");
-                                        ctx.runOnUiThread(new java.lang.Runnable({        
-                                            run: function() {            
-                                                new android.os.Handler()                .postDelayed(new java.lang.Runnable({                    
+                                        ctx.runOnUiThread(new java.lang.Runnable({
+                                            run: function() {
+                                                new android.os.Handler().postDelayed(new java.lang.Runnable({
                                                     run: function() {
                                                         Server.sendChat("  /_______\\");
                                                         //Server.sendChat(" /________\\");
-                                                                            
-                                                    }                
-                                                }), /* Milliseconds between every call*/ 300);        
-                                            }    
-                                        }))                    
-                                    }                
-                                }), /* Milliseconds between every call*/ 300);        
-                            }    
+
+                                                    }
+                                                }), /* Milliseconds between every call*/ 300);
+                                            }
+                                        }))
+                                    }
+                                }), /* Milliseconds between every call*/ 300);
+                            }
                         }))
+                    }
+                }));
+                var btnhealt = newSpriteButton(desc.misc);
+                btnhealt.setText("");
+                btnhealt.setOnClickListener(new android.view.View.OnClickListener({
+                    onClick: function(viewarg) {
+
                     }
                 }));
                 //info
@@ -1912,9 +1921,9 @@ function hackmenu(which) {
                     onClick: function(viewarg) {
                         extramenu();
                         exit2();
-                        if(hackermenu) hackermenu.dismiss();
-                        if(exitUI) exitUI.dismiss();
-                        if(menu) menu.dismiss();
+                        if (hackermenu) hackermenu.dismiss();
+                        if (exitUI) exitUI.dismiss();
+                        if (menu) menu.dismiss();
                     }
                 }));
                 /*btnabout.setOnClickListener(new android.view.View.OnClickListener({
@@ -1928,7 +1937,7 @@ function hackmenu(which) {
                 //Example
                 //Add Views
                 menuLayout1.addView(newplaceholder());
-                if(which == 1) {
+                if (which == 1) {
                     //Hacks
                     menuLayout2.setOrientation(1);
                     menuLayout2.addView(textgamesped);
@@ -1959,11 +1968,11 @@ function hackmenu(which) {
                     menuLayout.addView(btnjrcheat);
                     menuLayout.addView(newplaceholder());
                     menuLayout.addView(btnsmine);
-					//menuLayout.addView(newplaceholder());
+                    //menuLayout.addView(newplaceholder());
                     //menuLayout.addView(btnfeat);
                     menuLayout.addView(newbigplaceholder());
                 }
-                if(which == 2) {
+                if (which == 2) {
                     //Server
                     menuLayout.addView(newbigplaceholder());
                     menuLayout.addView(btnspam);
@@ -1977,7 +1986,7 @@ function hackmenu(which) {
                     menuLayout.addView(btncrash);
                     menuLayout.addView(newbigplaceholder());
                 }
-                if(which == 3) {
+                if (which == 3) {
                     //Singleplayer
                     menuLayout2.setOrientation(0);
                     menuLayout2.addView(btnday);
@@ -1992,7 +2001,7 @@ function hackmenu(which) {
                     menuLayout.addView(btnench);
                     menuLayout.addView(newbigplaceholder());
                 }
-                if(which == 4) {
+                if (which == 4) {
                     //Misc
                     menuLayout.addView(newbigplaceholder());
                     menuLayout.addView(btnghost);
@@ -2008,7 +2017,7 @@ function hackmenu(which) {
                 menuLayout1.setGravity(titlegravity);
                 menuScroll.addView(menuLayout);
                 menuLayout1.addView(menuScroll);
-            } catch(e) {
+            } catch (e) {
                 print("Oh crap Error line: " + e.lineNumber + " Error:" + e);
             }
             //Seeker
@@ -2103,7 +2112,7 @@ function extramenu() {
                 menu2.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(android.graphics.Color.parseColor("#" + themehtml)));
                 menu2.showAtLocation(ctx.getWindow()
                     .getDecorView(), android.view.Gravity.RIGHT | android.view.Gravity.TOP, 0, 0);
-            } catch(error) {
+            } catch (error) {
                 print('An error occured: ' + error);
             }
         }
@@ -2141,7 +2150,7 @@ function advsetd() {
                 dialoger.show();
             }
         }));
-    } catch(e) {
+    } catch (e) {
         print(e);
     }
 }
@@ -2177,7 +2186,7 @@ function xpd() {
                 dialoger.show();
             }
         }));
-    } catch(e) {
+    } catch (e) {
         print(e);
     }
 }
@@ -2201,7 +2210,7 @@ function spammsgd(btn) {
                 var crashcode = "\10";
                 var stackName = "";
                 var builder = new java.lang.StringBuilder().append(crashcode);
-                for(var i = 0; i < 250; i++) {
+                for (var i = 0; i < 250; i++) {
                     builder = new java.lang.StringBuilder().append(stackName);
                     stackName = builder.append("€").toString();
                 }
@@ -2232,7 +2241,7 @@ function spammsgd(btn) {
                 dialoger.show();
             }
         }));
-    } catch(e) {
+    } catch (e) {
         print(e);
     }
 }
@@ -2248,8 +2257,8 @@ function wmd() {
         //Buttons, Texts...
         var wstr = {
             getw: function() {
-                if(Level.getLightningLevel() == 1) return "Thunder storm";
-                if(Level.getRainLevel() == 1) return "Rain";
+                if (Level.getLightningLevel() == 1) return "Thunder storm";
+                if (Level.getRainLevel() == 1) return "Rain";
                 return "Sun";
             }
         };
@@ -2272,7 +2281,7 @@ function wmd() {
             onClick: function(viewarg) {
                 //Your Code Here...
                 Level.setRainLevel(seekweather.getProgress());
-                if(seekweather.getProgress() != 0) {
+                if (seekweather.getProgress() != 0) {
                     Level.setLightningLevel(seekweather.getProgress() - 1);
                 } else {
                     Level.setLightningLevel(0);
@@ -2290,7 +2299,7 @@ function wmd() {
                 dialoger.show();
             }
         }));
-    } catch(e) {
+    } catch (e) {
         toast(e, 2);
     }
 }
@@ -2327,7 +2336,7 @@ function masstelld() {
                 dialoger.show();
             }
         }));
-    } catch(e) {
+    } catch (e) {
         print(e);
     }
 }
@@ -2363,7 +2372,7 @@ function leetspeakd() {
                 dialoger.show();
             }
         }));
-    } catch(e) {
+    } catch (e) {
         print(e);
     }
 }
@@ -2398,7 +2407,7 @@ function serverd() {
                 dialoger.show();
             }
         }));
-    } catch(e) {
+    } catch (e) {
         print(e);
     }
 }
@@ -2414,7 +2423,7 @@ function windowMenu() {
     var ctx = com.mojang.minecraftpe.MainActivity.currentMainActivity.get();
     ctx.runOnUiThread(new java.lang.Runnable({
         run: function() {
-            if(menu2 != null) {
+            if (menu2 != null) {
                 exitUI2.dismiss();
                 menu2.dismiss();
                 menu2 = null;
@@ -2431,7 +2440,7 @@ function windowMenu() {
                 /*
                 var rightpar = new android.widget.RelativeLayout.LayoutParams(android.widget.RelativeLayout.LayoutParams.WRAP_CONTENT, android.widget.RelativeLayout.LayoutParams.WRAP_CONTENT); rightpar.addRule(android.widget.RelativeLayout.ALIGN_RIGHT);
                 */
-            } catch(e) {
+            } catch (e) {
                 print("Linear Fail :" + e);
             }
             try {
@@ -2469,7 +2478,7 @@ title.setBackgroundColor(android.graphics.Color.parseColor("#"+themehtml));
                 xButton2.setText('X');
                 xButton2.setTextSize(30);
                 /*Button.setBackgroundColor(android.graphics.Color.parseColor("#000000"));*/
-                if(themehtml == "d32f2f") {} else {
+                if (themehtml == "d32f2f") {} else {
                     xButton.setTextColor(android.graphics.Color.RED);
                 }
                 xButton.setTextColor(android.graphics.Color.RED);
@@ -2477,33 +2486,39 @@ title.setBackgroundColor(android.graphics.Color.parseColor("#"+themehtml));
                 xButton.setOnClickListener(new android.view.View.OnClickListener({
                     onClick: function(viewarg) {
                         menu.dismiss();
-                        if(hackermenu != null) {
+                        if (hackermenu != null) {
                             hackermenu.dismiss();
                             hackermenu = null;
                         }
                         showmenubtn();
-                        if(ghost)
+                        if (ghost)
                             fadeMenuBtn(200);
                     }
                 }));
                 xButton2.setOnClickListener(new android.view.View.OnClickListener({
                     onClick: function(viewarg) {
                         menu.dismiss();
-                        if(hackermenu != null) {
+                        if (hackermenu != null) {
                             hackermenu.dismiss();
                             hackermenu = null;
                         }
                         showmenubtn();
-                        if(ghost)
+                        if (ghost)
                             fadeMenuBtn(200);
                     }
                 }));
+				if(lsd){
+					xButton.getBackground().setAlpha(100);
+					xButton2.getBackground().setAlpha(100);
+				}
                 xButton.setGravity(android.view.Gravity.CENTER);
                 //menuLayout3.setGravity(android.view.Gravity.CENTER_VERTICAL);
                 menuLayout3.addView(xButton2);
                 menuLayout3.addView(title);
                 menuLayout3.addView(xButton);
-                var drawbtg = new android.graphics.drawable.BitmapDrawable(ctx.getResources(), bg);
+				var mlg = new android.graphics.drawable.BitmapDrawable(ctx.getResources(), bg);
+				mlg.setAlpha(100);
+                var drawbtg = mlg;
                 menuLayout3.setBackground(drawbtg);
                 //menuLayout3.addView(xButton);
                 menuLayout2.addView(menuLayout3);
@@ -2569,7 +2584,7 @@ title.setBackgroundColor(android.graphics.Color.parseColor("#"+themehtml));
                 menuScroll.addView(menuLayout);
                 menuLayout1.addView(menuScroll);
                 menuLayout2.addView(menuLayout1);
-                if(upavi) {
+                if (upavi) {
                     menuLayout2.addView(updater);
                 } else {
                     menuLayout2.addView(newplaceholder());
@@ -2587,7 +2602,7 @@ title.setBackgroundColor(android.graphics.Color.parseColor("#"+themehtml));
                 menu.showAtLocation(ctx.getWindow()
                     .getDecorView(), android.view.Gravity.RIGHT | android.view.Gravity.TOP, 0, 0);
                 hackmenu(1);
-            } catch(error) {
+            } catch (error) {
                 print('An error occured: ' + error);
             }
         }
@@ -2625,7 +2640,7 @@ function mainMenu() {
                 sprinttext.setText(lamg[lang][1] + ": " + (sprinter));
                 title.setGravity(titlegravity);
                 sprinttext.setGravity(textgravity);
-                if(themehtml == 00000000) {
+                if (themehtml == 00000000) {
                     title.setTextColor(android.graphics.Color.parseColor("#000000"));
                 } else {
                     title.setTextColor(android.graphics.Color.parseColor("#ffffff"));
@@ -2634,7 +2649,7 @@ function mainMenu() {
                 sprinttext.setTextSize(textsize);
                 //checker...
                 var xcheck = new android.widget.CheckBox(ctx);
-                if(!xray) {
+                if (!xray) {
                     xcheck.setText(lamg[lang][5][0]);
                 } else {
                     xcheck.setText(lamg[lang][5][1]);
@@ -2642,7 +2657,7 @@ function mainMenu() {
                 xcheck.setChecked(xray);
                 xcheck.setOnClickListener(new android.view.View.OnClickListener({
                     onClick: function(viewarg) {
-                        if(!xray) {
+                        if (!xray) {
                             xray = true;
                             //Your Code Here...
                             Block.defineBlock(2, "Grass", ["glass", 0], 3, true, 20);
@@ -2663,7 +2678,7 @@ function mainMenu() {
                             Block.defineBlock(4, "Cobblestone", ["cobblestone", 0]);
                         }
                         xcheck.setChecked(xray);
-                        if(!xray) {
+                        if (!xray) {
                             xcheck.setText(lamg[lang][5][0]);
                         } else {
                             xcheck.setText(lamg[lang][5][1]);
@@ -2675,7 +2690,7 @@ function mainMenu() {
                 btnfreecam.setText("Freecam: " + lamg[lang][9][imob]);
                 btnfreecam.setOnClickListener(new android.view.View.OnClickListener({
                     onClick: function(viewarg) {
-                        if(imob == 1) {
+                        if (imob == 1) {
                             createfree();
                             imob = 0;
                             btnfreecam.setText("Freecam: " + lamg[lang][9][imob]);
@@ -2692,7 +2707,7 @@ function mainMenu() {
                 btnnig.setText(lamg[lang][8][nightvis]);
                 btnnig.setOnClickListener(new android.view.View.OnClickListener({
                     onClick: function(viewarg) {
-                        if(nightvis == 0) {
+                        if (nightvis == 0) {
                             Block.setLightLevel(blo, 15);
                             nightvis = 1;
                         } else {
@@ -2709,20 +2724,20 @@ function mainMenu() {
                 Btngamemode.setText(lamg[lang][6][gamemode]);
                 Btngamemode.setOnClickListener(new android.view.View.OnClickListener({
                     onClick: function(viewarg) {
-                        if(gamemode == 0) {
+                        if (gamemode == 0) {
                             var c = new Array(Entity.getCarriedItem(Player.getEntity()), Entity.getCarriedItemCount(Player.getEntity()), Entity.getCarriedItemData(Player.getEntity()));
                             Level.setGameMode(1);
                             Entity.setCarriedItem(Player.getEntity(), c[0], c[1], c[2])
                             fly = Player.canFly();
-                            if(!fly) {
+                            if (!fly) {
                                 btnfly.setText(lamg[lang][7][0]);
                             } else {
                                 btnfly.setText(lamg[lang][7][1]);
                             }
-                        } else if(gamemode == 1) {
+                        } else if (gamemode == 1) {
                             Level.setGameMode(0);
                             fly = Player.canFly();
-                            if(!fly) {
+                            if (!fly) {
                                 btnfly.setText(lamg[lang][7][0]);
                             } else {
                                 btnfly.setText(lamg[lang][7][1]);
@@ -2734,15 +2749,15 @@ function mainMenu() {
                 }));
                 fly = Player.canFly();
                 var btnfly = new android.widget.Button(ctx);
-                if(!fly) {
+                if (!fly) {
                     btnfly.setText(lamg[lang][7][0]);
                 } else {
                     btnfly.setText(lamg[lang][7][1]);
                 }
                 btnfly.setOnClickListener(new android.view.View.OnClickListener({
                     onClick: function(viewarg) {
-                        if(fly) {
-                            if(gamemode != 1) {
+                        if (fly) {
+                            if (gamemode != 1) {
                                 Player.setCanFly(false);
                                 fly = false;
                             } else {}
@@ -2751,7 +2766,7 @@ function mainMenu() {
                             Player.setCanFly(true);
                         }
                         fly = Player.canFly();
-                        if(!fly) {
+                        if (!fly) {
                             btnfly.setText(lamg[lang][7][0]);
                         } else {
                             btnfly.setText(lamg[lang][7][1]);
@@ -2772,21 +2787,21 @@ function mainMenu() {
                             gamespeed = seekgamespeed.getProgress() + 1;
                             ModPE.setGameSpeed((gamespeed + 3) * 5);
                             textgamesped.setText("Gamespeed: " + (gamespeed + 3) * 5);
-                        } catch(e) {
+                        } catch (e) {
                             toast("Error Code 2: " + e, 2);
                         }
                     }
                 }));
                 var btnskil = new android.widget.Button(ctx);
                 btnskil.setText("EAura");
-                if(!entmov) {
+                if (!entmov) {
                     btnskil.setText("EAura: " + lamg[lang][9][1]);
                 } else {
                     btnskil.setText("EAura: " + lamg[lang][9][0]);
                 }
                 btnskil.setOnClickListener(new android.view.View.OnClickListener({
                     onClick: function(viewarg) {
-                        if(entmov) {
+                        if (entmov) {
                             btnskil.setText("EAura: " + lamg[lang][9][1]);
                             entmov = false;
                         } else {
@@ -2896,7 +2911,7 @@ function mainMenu() {
                     onClick: function(viewarg) {
                         try {
                             openbro("https://plus.google.com/communities/103392401584364781053");
-                        } catch(e) {
+                        } catch (e) {
                             toast("Error Code 1: " + e, 2);
                         }
                     }
@@ -2948,7 +2963,7 @@ function mainMenu() {
                 menuLayout.addView(btnabout);
                 menuLayout.addView(btnsett);
                 menuLayout.addView(follg);
-                if(upavi) {
+                if (upavi) {
                     menuLayout.addView(updater);
                 }
                 //something...
@@ -2962,7 +2977,7 @@ function mainMenu() {
                 menu.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(android.graphics.Color.parseColor("#" + themehtml)));
                 menu.showAtLocation(ctx.getWindow()
                     .getDecorView(), android.view.Gravity.RIGHT | android.view.Gravity.TOP, 0, 0);
-            } catch(error) {
+            } catch (error) {
                 print('An error occured: ' + error);
             }
         }
@@ -2979,7 +2994,7 @@ function exit() {
                 xButton.setText('X');
                 xButton.setTextSize(30);
                 /*Button.setBackgroundColor(android.graphics.Color.parseColor("#000000"));*/
-                if(themehtml == "d32f2f") {
+                if (themehtml == "d32f2f") {
                     xButton.setTextColor(android.graphics.Color.WHITE);
                 } else {
                     xButton.setTextColor(android.graphics.Color.RED);
@@ -2988,7 +3003,7 @@ function exit() {
                     onClick: function(viewarg) {
                         exitUI.dismiss();
                         menu.dismiss();
-                        if(hackermenu != null) {
+                        if (hackermenu != null) {
                             hackermenu.dismiss();
                             hackermenu = null;
                         }
@@ -3002,7 +3017,7 @@ function exit() {
                     .getDecorView(), android.view.Gravity.RIGHT | android.view.Gravity.TOP, 0, ctx.getWindowManager()
                     .getDefaultDisplay()
                     .getHeight() / 2);
-            } catch(exception) {
+            } catch (exception) {
                 print(exception);
             }
         }
@@ -3032,18 +3047,18 @@ function leaveGame() {
     var ctx = com.mojang.minecraftpe.MainActivity.currentMainActivity.get();
     ctx.runOnUiThread(new java.lang.Runnable({
         run: function() {
-            if(menu != null) {
+            if (menu != null) {
                 menu.dismiss();
                 menu = null;
             }
-            if(GUI == null) {
+            if (GUI == null) {
                 showmenubtn();
             }
-            if(hackermenu != null) {
+            if (hackermenu != null) {
                 hackermenu.dismiss();
                 hackermenu = null;
             }
-            if(exitUI != null) {
+            if (exitUI != null) {
                 exitUI.dismiss();
                 exitUI = null;
             }
@@ -3056,13 +3071,13 @@ function modTick() {
     ctx.runOnUiThread(new java.lang.Runnable({
         run: function() {}
     }));
-    if(sprinter != 0) {
-        if(i == 1) {
+    if (sprinter != 0) {
+        if (i == 1) {
             px = getPlayerX();
             py = getPlayerY();
             pz = getPlayerZ();
             i = i + 1;
-        } else if(i == 3) {
+        } else if (i == 3) {
             i = 1;
             Xdiff = getPlayerX() - px;
             Zdiff = getPlayerZ() - pz;
@@ -3071,14 +3086,14 @@ function modTick() {
             Xdiff = 0;
             Zdiff = 0;
         }
-        if(i != 1) {
+        if (i != 1) {
             i = i + 1;
         }
     }
 }
 
 function entityRemovedHook(entity) {
-    if(entity == e) {
+    if (entity == e) {
         ModPE.setCamera(Player.getEntity());
         e = null;
         imob = 1;
@@ -3086,12 +3101,12 @@ function entityRemovedHook(entity) {
 }
 
 function useItem(x, y, z, itemId, blockId, side) {
-    if(jrcheat) {
+    if (jrcheat) {
         //Huh? Dont copy
         var p = Player.getEntity();
         setVelX(p, ((x + 0.5 - getPlayerX()) / 5));
         setVelZ(p, ((z + 0.5 - getPlayerZ()) / 5));
-        if(((y + 2.55 - getPlayerY()) / 5) + 0.425 < 0) {
+        if (((y + 2.55 - getPlayerY()) / 5) + 0.425 < 0) {
             setVelY(p, ((y + 2.55 - getPlayerY()) / 5) + 0.7);
         } else {
             setVelY(p, ((y + 2.55 - getPlayerY()) / 5) + 0.425);
@@ -3111,60 +3126,71 @@ function every() {
                         nz = getPlayerZ();
 
                         tick++;
-                        if(tick >= 3000) {
+                        if (tick >= 3000) {
                             tick = 0;
-                            if(pref().length > 2) {
-                                if(pref()[3] == "true" || pref()[3] == "true\n") {
+                            if (pref().length > 2) {
+                                if (pref()[3] == "true" || pref()[3] == "true\n") {
                                     collectGA();
                                 }
                             }
                         }
-                        if(tick%100<=0.01){
-try{
-/*
-setVelY(Player.getEntity(),0.01);
-if(Entity.getVelY(Player.getEntity())==0.01)print("Yo!!!");*/
-}catch(e){
+                        if (tick % 100 <= 0.01) {
+                            try {
+                                /*
+                                setVelY(Player.getEntity(),0.01);
+                                if(Entity.getVelY(Player.getEntity())==0.01)print("Yo!!!");*/
+                            } catch (e) {
 
-}
-}
-online = !(Server.getAddress()==null||Server.getAddress().startsWith("192.168"));
+                            }
+                        }
+						if(lsd && hackermenu != null && hackermenu.isShowing()){
+							lsdcolor.unshift(android.graphics.Color.rgb(Math.floor(Math.random() * 256), Math.floor(Math.random() * 256), Math.floor(Math.random() * 256)));
+							while(lsdcolor.length > 10) {
+								lsdcolor.pop();
+							}
+							while(lsdcolor.length < 3)lsdcolor.unshift(android.graphics.Color.rgb(Math.floor(Math.random() * 256), Math.floor(Math.random() * 256), Math.floor(Math.random() * 256)));
+							var bg = new android.graphics.drawable.GradientDrawable();
+							bg.mutate().setColors(lsdcolor);
+							hackermenu.getContentView().setBackgroundDrawable(bg);
+							menu.getContentView().setBackgroundDrawable(bg);
+						}
+                        online = !(Server.getAddress() == null || Server.getAddress().startsWith("192.168"));
                         try {
                             try {
                                 inject.every();
-                            } catch(e) {}
-                            if(dat && e) {
-                                if(getYaw(Player.getEntity()) > 360) Entity.setRot(Player.getEntity(), 0, getPitch(Player.getEntity()));
+                            } catch (e) {}
+                            if (dat && e) {
+                                if (getYaw(Player.getEntity()) > 360) Entity.setRot(Player.getEntity(), 0, getPitch(Player.getEntity()));
                                 ModPE.setCamera(dat);
                                 setVelY(dat, -0.07);
                                 setPosition(Player.getEntity(), ox, oy, oz);
                                 Entity.setPosition(dat, Entity.getX(dat) + (nx - ox), Entity.getY(dat) + (ny - oy), Entity.getZ(dat) + (nz - oz));
                                 Entity.setRot(dat, getYaw(Player.getEntity()), getPitch(Player.getEntity()));
                             }
-                        } catch(e) {
+                        } catch (e) {
                             print(e);
                         }
                         //glide
-                        if(glide) {
+                        if (glide) {
                             try {
-                                if(c < 256) {
+                                if (c < 256) {
                                     Entity.setCarriedItem(Player.getEntity(), c + 1, 1, 0);
                                     c++;
                                 }
-                                if(c > 250) {
+                                if (c > 250) {
                                     c = 0;
                                 }
-                            } catch(e) {
+                            } catch (e) {
                                 c++;
                             }
-                            if(Entity.getVelY(Player.getEntity()) <= 0) {
+                            if (Entity.getVelY(Player.getEntity()) <= 0) {
                                 setVelY(Player.getEntity(), -0.07);
                             }
                         }
                         //passwordha passhack
-                        if(phack) {
-                            if(pass[passi] != null) {
-                                if(nor >= 0) {
+                        if (phack) {
+                            if (pass[passi] != null) {
+                                if (nor >= 0) {
                                     clientMessage("Trying the " + passi + "th password " + pass[0]);
                                     Server.sendChat("/login " + pass.shift());
                                     //Server.sendChat(pass[passi]);
@@ -3181,25 +3207,25 @@ online = !(Server.getAddress()==null||Server.getAddress().startsWith("192.168"))
                             }
                         }
                         //masstell
-                        if(masstell) {
+                        if (masstell) {
                             masstell = false;
                             var players = Server.getAllPlayers();
                             clientMessage("angefangen");
                             //clientMessage();
                             clientMessage(players[0].getName());
-                            for(var i = 0; i < players.length; i++) {
+                            for (var i = 0; i < players.length; i++) {
                                 Server.sendChat("/tell " + players[i] + " " + masstellmsg);
                             }
                         }
                         //srverspam
-                        if(sspam) {
+                        if (sspam) {
                             var r = new java.lang.Runnable({
                                 run: function() {
                                     var stackName = spammsg;
                                     builder = new java.lang.StringBuilder()
                                         .append(spammsg);
                                     stackName = builder.toString();
-                                    for(var i = 0; i < 10; i++) {
+                                    for (var i = 0; i < 10; i++) {
                                         /*
                                         			 builder = new java.lang.StringBuilder().append(stackName);
 
@@ -3231,13 +3257,13 @@ online = !(Server.getAddress()==null||Server.getAddress().startsWith("192.168"))
                         			}
                         */
                         //eaura
-                        if(entmov) {
+                        if (entmov) {
                             var mobs = Entity.getAll();
-                            for(var i = 0; i < mobs.length; i++) {
+                            for (var i = 0; i < mobs.length; i++) {
                                 var x = Entity.getX(mobs[i]) - getPlayerX();
                                 var y = Entity.getY(mobs[i]) - getPlayerY();
                                 var z = Entity.getZ(mobs[i]) - getPlayerZ();
-                                if(x * x + y * y + z * z <= 9 * 9 && x * x + y * y + z * z >= 0.001 && mobs[i] !== Player.getEntity() && Entity.getEntityTypeId(mobs[i]) <= 63 && Entity.getHealth(mobs[i]) >= 1) {
+                                if (x * x + y * y + z * z <= 9 * 9 && x * x + y * y + z * z >= 0.001 && mobs[i] !== Player.getEntity() && Entity.getEntityTypeId(mobs[i]) <= 63 && Entity.getHealth(mobs[i]) >= 1) {
                                     y = y + 0.5;
                                     var a = 0.5 + Entity.getX(mobs[i]);
                                     var b = Entity.getY(mobs[i]);
@@ -3247,19 +3273,19 @@ online = !(Server.getAddress()==null||Server.getAddress().startsWith("192.168"))
                                     var pitch = Math.asin(y);
                                     pitch = pitch * 180.0 / Math.PI;
                                     pitch = -pitch;
-                                    if(pitch < 90 && pitch > -90) {
+                                    if (pitch < 90 && pitch > -90) {
                                         Entity.setRot(Player.getEntity(), -Math.atan2(a - (Player.getX() + 0.5), c - (Player.getZ() + 0.5)) * (180 / Math.PI), pitch);
                                     }
                                 }
                             }
                         }
-                        if(aimbot) {
+                        if (aimbot) {
                             var mobs = Entity.getAll();
-                            for(var i = 0; i < mobs.length; i++) {
+                            for (var i = 0; i < mobs.length; i++) {
                                 var x = Entity.getX(mobs[i]) - getPlayerX();
                                 var y = Entity.getY(mobs[i]) - getPlayerY();
                                 var z = Entity.getZ(mobs[i]) - getPlayerZ();
-                                if(x * x + y * y + z * z <= 100 * 100 && x * x + y * y + z * z >= 0.001 && mobs[i] !== Player.getEntity() && Entity.getEntityTypeId(mobs[i]) <= 63 && Entity.getHealth(mobs[i]) >= 1) {
+                                if (x * x + y * y + z * z <= 100 * 100 && x * x + y * y + z * z >= 0.001 && mobs[i] !== Player.getEntity() && Entity.getEntityTypeId(mobs[i]) <= 63 && Entity.getHealth(mobs[i]) >= 1) {
                                     y = y + 0.5;
                                     var a = 0.5 + Entity.getX(mobs[i]);
                                     var b = Entity.getY(mobs[i]);
@@ -3269,40 +3295,40 @@ online = !(Server.getAddress()==null||Server.getAddress().startsWith("192.168"))
                                     var pitch = Math.asin(y);
                                     pitch = pitch * 180.0 / Math.PI;
                                     pitch = -pitch;
-                                    if(pitch < 90 && pitch > -90) {
+                                    if (pitch < 90 && pitch > -90) {
                                         aimAt(mobs[i]);
                                     }
                                 }
                             }
                         }
-                        if(wallh) {
-                            if(tick >= 20) tick = 0;
-                            if(tick == 0) {
-                                for(var i = 0; i <= 256; i++) {
-                                    if(i == 26) {
+                        if (wallh) {
+                            if (tick >= 20) tick = 0;
+                            if (tick == 0) {
+                                for (var i = 0; i <= 256; i++) {
+                                    if (i == 26) {
                                         Block.setShape(i, 0.001, 0, 0.001, 0.999, 0.56, 0.999);
-                                    } else if(Block.getRenderType(i) == 0 || Block.getRenderType(i) == 31) {
+                                    } else if (Block.getRenderType(i) == 0 || Block.getRenderType(i) == 31) {
                                         Block.setShape(i, 0.001, 0, 0.001, 0.999, 1, 0.999);
                                     }
                                 }
                             }
-                            if(tick != 0 && tick <= 10) {
-                                for(var i = 0; i <= 256; i++) {
-                                    if(i == 26) {
+                            if (tick != 0 && tick <= 10) {
+                                for (var i = 0; i <= 256; i++) {
+                                    if (i == 26) {
                                         Block.setShape(i, 0, 0, 0, 1, 0.56, 1);
-                                    } else if(Block.getRenderType(i) == 0 || Block.getRenderType(i) == 31) {
+                                    } else if (Block.getRenderType(i) == 0 || Block.getRenderType(i) == 31) {
                                         Block.setShape(i, 0, 0, 0, 1, 1, 1);
                                     }
                                 }
                             }
                             tick++;
                         }
-                        if(Player.getEntity() == 0) godmode = false;
-                        if(godmode) {
+                        if (Player.getEntity() == 0) godmode = false;
+                        if (godmode) {
                             //add some hearts '_'
                             Entity.setHealth(Player.getEntity(), 10000);
                         }
-                        if(!ghost) {
+                        if (!ghost) {
                             ModPE.langEdit("menu.copyright", "Servicehack by GodSoft029");
                             ModPE.langEdit("playscreen.header.local", "Choose world to §cHack");
                             ModPE.langEdit("createWorldScreen.progress.local", "Generating new hacked world...");
@@ -3316,7 +3342,7 @@ online = !(Server.getAddress()==null||Server.getAddress().startsWith("192.168"))
                             ModPE.langEdit("progressScreen.message.locating", langVal[4]);
                         }
                         try {
-                            if( /*net.zhuoweizhang.mcpelauncher.ScriptManager.this.isScriptingEnabled()==false&&*/ GUI != null && GUI.isShowing() == false && (hackermenu == null || hackermenu.isShowing() == false)) {
+                            if ( /*net.zhuoweizhang.mcpelauncher.ScriptManager.this.isScriptingEnabled()==false&&*/ GUI != null && GUI.isShowing() == false && (hackermenu == null || hackermenu.isShowing() == false)) {
                                 /*var sender = "";
                                 					var str = "\u00a70BlockLauncher, enable scripts";
                                 					net.zhuoweizhang.mcpelauncher.ScriptManager.handleMessagePacketCallback(sender, str);*/
@@ -3324,10 +3350,10 @@ online = !(Server.getAddress()==null||Server.getAddress().startsWith("192.168"))
                                 net.zhuoweizhang.mcpelauncher.ScriptManager.setLevelFakeCallback(true, false);
                                 online = true;
                             }
-                        } catch(e) {
+                        } catch (e) {
                             print(e);
                         }
-                        if(GUI != null && GUI.isShowing() == false && (hackermenu == null || hackermenu.isShowing() == false)) showmenubtn();
+                        if (GUI != null && GUI.isShowing() == false && (hackermenu == null || hackermenu.isShowing() == false)) showmenubtn();
                         /*if(!GUI && !hackermenu)showMenuBtn();*/
                         eval(every());
                     }
@@ -3339,25 +3365,36 @@ every();
 
 function randomdialog() {
     var gplus = "https://plus.google.com/communities/103392401584364781053";
-    if(Math.random() <= 0.025) {
+    var yt = "https://www.youtube.com/";
+    if (Math.random() <= 0.025) {
         try {
             var ctx = com.mojang.minecraftpe.MainActivity.currentMainActivity.get();
             var alert2 = new android.app.AlertDialog.Builder(ctx);
-            alert2.setTitle("Servicehack group");
+
             var layout = new android.widget.LinearLayout(ctx);
             layout.setOrientation(1);
             //Buttons, Texts...
             var text = new android.widget.TextView(ctx);
-            text.setText("Do you have nice ideas?\nOr found a bug?\nThen Join our Google+ Group!");
+            var link = gplus,
+                pos = "Join the group";
+            if (Math.random() >= 0.5) {
+                alert2.setTitle("Servicehack group");
+                text.setText("Do you have nice ideas?\nOr found a bug?\nThen Join our Google+ Group!");
+            } else {
+                alert2.setTitle("YouTube");
+                text.setText("We have a YouTube channel! There we upload some Mod reviews, Devlogs and other stuff!");
+                link = yt;
+                pos = "Show me!";
+            }
             text.setTextSize(20);
             text.setGravity(android.view.Gravity.CENTER);
             layout.addView(text);
             layout.setGravity(android.view.Gravity.CENTER);
             alert2.setView(layout);
-            alert2.setPositiveButton("Join the group!", new android.content.DialogInterface.OnClickListener({
+            alert2.setPositiveButton(pos, new android.content.DialogInterface.OnClickListener({
                 onClick: function(viewarg) {
                     //Your Code Here...
-                    openbro(gplus);
+                    openbro(link);
                 }
             }));
             alert2.setNegativeButton("No", new android.content.DialogInterface.OnClickListener({
@@ -3371,29 +3408,29 @@ function randomdialog() {
                     dialoger.show();
                 }
             }));
-        } catch(e) {
+        } catch (e) {
             print(e);
         }
     }
 }
 
 function updateSpeed() {
-    for(var i = 0; i <= 256; i++) {
+    for (var i = 0; i <= 256; i++) {
         Block.setFriction(i, 0.1 * (5.1 - speed / 2));
     }
 }
 
 function updateSmine() {
-    for(var i = 0; i <= 256; i++) {
-        if(smine == 0)
+    for (var i = 0; i <= 256; i++) {
+        if (smine == 0)
             Block.setDestroyTime(i, breaktimes[i]);
-        if(smine == 1)
+        if (smine == 1)
             Block.setDestroyTime(i, breaktimes[i] / 100 * 91);
-        if(smine == 2)
+        if (smine == 2)
             Block.setDestroyTime(i, breaktimes[i] / 100 * 75);
-        if(smine == 3)
+        if (smine == 3)
             Block.setDestroyTime(i, breaktimes[i] / 100 * 60);
-        if(smine == 4)
+        if (smine == 4)
             Block.setDestroyTime(i, breaktimes[i] / 1000 * 2);
     }
 }
@@ -3401,7 +3438,7 @@ function updateSmine() {
 randomdialog();
 
 function entityHurtHook(att, vic, dmg) {
-    if(vic == Player.getEntity() && godmode)
+    if (vic == Player.getEntity() && godmode)
         preventDefault();
 }
 
@@ -3412,27 +3449,27 @@ function newLevel() {
 
 
 function ItemgetEnchantType(id) {
-    if(id == 340) return 0;
-    if(Item.getUseAnimation(id) == UseAnimation.bow) return 1;
-    if(id == 258 || id == 271 || id == 275 || id == 279 || id == 286) return 2;
-    if(id == 290 || id == 291 || id == 292 || id == 293 || id == 294) return 2;
-    if(id == 257 || id == 270 || id == 274 || id == 278 || id == 285) return 2;
-    if(id == 256 || id == 269 || id == 273 || id == 277 || id == 284) return 2;
-    if(id == 359 || id == 259) return 2;
-    if(id == 267 || id == 268 || id == 272 || id == 276 || id == 283) return 3;
-    if(id >= 298 && id <= 317) return 4;
-    if(id == 346) return 5;
+    if (id == 340) return 0;
+    if (Item.getUseAnimation(id) == UseAnimation.bow) return 1;
+    if (id == 258 || id == 271 || id == 275 || id == 279 || id == 286) return 2;
+    if (id == 290 || id == 291 || id == 292 || id == 293 || id == 294) return 2;
+    if (id == 257 || id == 270 || id == 274 || id == 278 || id == 285) return 2;
+    if (id == 256 || id == 269 || id == 273 || id == 277 || id == 284) return 2;
+    if (id == 359 || id == 259) return 2;
+    if (id == 267 || id == 268 || id == 272 || id == 276 || id == 283) return 3;
+    if (id >= 298 && id <= 317) return 4;
+    if (id == 346) return 5;
 }
 
 function parseEnch(slot) {
     var e = net.zhuoweizhang.mcpelauncher.ScriptManager.nativePlayerGetEnchantments(slot);
     var all = new Array(63);
-    for(var ii = 0; ii < all.length; ii++) {
+    for (var ii = 0; ii < all.length; ii++) {
         all[ii] = "";
 
     }
 
-    for(var i = 0; i <= e.length; i += 2) {
+    for (var i = 0; i <= e.length; i += 2) {
         var type = e[i];
         var level = e[i + 1];
         all[type] = level + "";
@@ -3459,93 +3496,93 @@ function enchanter(slot) {
 
             //Unbreaking 
 
-            var  Unbreaking = new android.widget.LinearLayout(ctx); 
+            var Unbreaking = new android.widget.LinearLayout(ctx);
             Unbreaking.setOrientation(0);
-            var Unbreaking1 = new android.widget.CheckBox(ctx); 
-            Unbreaking1.setText(ModPE.getI18n("enchantment.durability")); 
+            var Unbreaking1 = new android.widget.CheckBox(ctx);
+            Unbreaking1.setText(ModPE.getI18n("enchantment.durability"));
             Unbreaking1.setOnClickListener(new android.view.View.OnClickListener({
                 onClick: function(viewarg) {
 
                 }
             }));
-            var  Unbreaking2 = new android.widget.EditText(ctx); 
-            Unbreaking2.setHint("Level"); 
+            var Unbreaking2 = new android.widget.EditText(ctx);
+            Unbreaking2.setHint("Level");
             Unbreaking2.setSingleLine(true);
 
-            Unbreaking2.setText(e[Enchantment.UNBREAKING]); 
-            Unbreaking2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER|android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
+            Unbreaking2.setText(e[Enchantment.UNBREAKING]);
+            Unbreaking2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
 
-             
-            Unbreaking.addView( Unbreaking1); 
-            Unbreaking.addView( Unbreaking2, params);
+
+            Unbreaking.addView(Unbreaking1);
+            Unbreaking.addView(Unbreaking2, params);
 
 
             //Efficiency
 
-            var Efficiency = new android.widget.LinearLayout(ctx); 
+            var Efficiency = new android.widget.LinearLayout(ctx);
             Efficiency.setOrientation(0);
-            var Efficiency1 = new android.widget.CheckBox(ctx); 
-            Efficiency1.setText(ModPE.getI18n("enchantment.digging")); 
+            var Efficiency1 = new android.widget.CheckBox(ctx);
+            Efficiency1.setText(ModPE.getI18n("enchantment.digging"));
             Efficiency1.setOnClickListener(new android.view.View.OnClickListener({
                 onClick: function(viewarg) {
 
                 }
             }));
-            var Efficiency2 = new android.widget.EditText(ctx); 
-            Efficiency2.setHint("Level"); 
+            var Efficiency2 = new android.widget.EditText(ctx);
+            Efficiency2.setHint("Level");
             Efficiency2.setSingleLine(true);
-            Efficiency2.setText(e[Enchantment.EFFICIENCY]); 
-            Efficiency2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER|android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
+            Efficiency2.setText(e[Enchantment.EFFICIENCY]);
+            Efficiency2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
 
-             
-            Efficiency.addView( Efficiency1); 
-            Efficiency.addView( Efficiency2, params);
+
+            Efficiency.addView(Efficiency1);
+            Efficiency.addView(Efficiency2, params);
 
 
 
 
             //Fortune
 
-            var  Fortune = new android.widget.LinearLayout(ctx); 
+            var Fortune = new android.widget.LinearLayout(ctx);
             Fortune.setOrientation(0);
-            var Fortune1 = new android.widget.CheckBox(ctx); 
-            Fortune1.setText(ModPE.getI18n("enchantment.lootBonusDigger")); 
+            var Fortune1 = new android.widget.CheckBox(ctx);
+            Fortune1.setText(ModPE.getI18n("enchantment.lootBonusDigger"));
             Fortune1.setOnClickListener(new android.view.View.OnClickListener({
                 onClick: function(viewarg) {
 
                 }
             }));
-            var Fortune2 = new android.widget.EditText(ctx); 
-            Fortune2.setHint("Level"); 
+            var Fortune2 = new android.widget.EditText(ctx);
+            Fortune2.setHint("Level");
             Fortune2.setSingleLine(true);
-            Fortune2.setText(e[Enchantment.FORTUNE]); 
-            Fortune2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER|android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
+            Fortune2.setText(e[Enchantment.FORTUNE]);
+            Fortune2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
 
-             
-            Fortune.addView( Fortune1); 
-            Fortune.addView( Fortune2, params);
+
+            Fortune.addView(Fortune1);
+            Fortune.addView(Fortune2, params);
 
 
             //Silk Touch
 
-            var  SilkTouch = new android.widget.LinearLayout(ctx); 
+            var SilkTouch = new android.widget.LinearLayout(ctx);
             SilkTouch.setOrientation(0);
-            var SilkTouch1 = new android.widget.CheckBox(ctx); 
-            SilkTouch1.setText(ModPE.getI18n("enchantment.untouching")); 
+            var SilkTouch1 = new android.widget.CheckBox(ctx);
+            SilkTouch1.setText(ModPE.getI18n("enchantment.untouching"));
             SilkTouch1.setOnClickListener(new android.view.View.OnClickListener({
                 onClick: function(viewarg) {
 
                 }
             }));
-            var SilkTouch2 = new android.widget.EditText(ctx); 
-            SilkTouch2.setHint("Level"); 
+            var SilkTouch2 = new android.widget.EditText(ctx);
+            SilkTouch2.setHint("Level");
             SilkTouch2.setSingleLine(true);
-            SilkTouch2.setText(e[Enchantment.SILK_TOUCH]); 
-            SilkTouch2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER|android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
+            SilkTouch2.setText(e[Enchantment.SILK_TOUCH]);
+            SilkTouch2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
 
-             
-            SilkTouch.addView( SilkTouch1); 
-            SilkTouch.addView( SilkTouch2, params);
+
+            SilkTouch.addView(SilkTouch1);
+            SilkTouch.addView(SilkTouch2, params);
 
             //Weapons
 
@@ -3565,7 +3602,7 @@ function enchanter(slot) {
             feuer2.setHint("Level");
             feuer2.setSingleLine(true);
             feuer2.setText(e[Enchantment.FIRE_ASPECT]);
-            feuer2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER|android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
+            feuer2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
 
             feuer.addView(feuer1);
             feuer.addView(feuer2, params);
@@ -3586,7 +3623,7 @@ function enchanter(slot) {
             Knockback2.setHint("Level");
             Knockback2.setSingleLine(true);
             Knockback2.setText(e[Enchantment.KNOCKBACK]);
-            Knockback2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER|android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
+            Knockback2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
 
             Knockback.addView(Knockback1);
             Knockback.addView(Knockback2, params);
@@ -3607,7 +3644,7 @@ function enchanter(slot) {
             Sharp2.setHint("Level");
             Sharp2.setSingleLine(true);
             Sharp2.setText(e[Enchantment.SHARPNESS]);
-            Sharp2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER|android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
+            Sharp2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
 
             Sharp.addView(Sharp1);
             Sharp.addView(Sharp2, params);
@@ -3628,7 +3665,7 @@ function enchanter(slot) {
             Looting2.setHint("Level");
             Looting2.setSingleLine(true);
             Looting2.setText(e[Enchantment.LOOTING]);
-            Looting2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER|android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
+            Looting2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
 
             Looting.addView(Looting1);
             Looting.addView(Looting2, params);
@@ -3650,7 +3687,7 @@ function enchanter(slot) {
             smite2.setHint("Level");
             smite2.setSingleLine(true);
             smite2.setText(e[Enchantment.SMITE]);
-            smite2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER|android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
+            smite2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
 
             smite.addView(smite1);
             smite.addView(smite2, params);
@@ -3671,7 +3708,7 @@ function enchanter(slot) {
             BaneOfArthropods2.setHint("Level");
             BaneOfArthropods2.setSingleLine(true);
             BaneOfArthropods2.setText(e[Enchantment.BANE_OF_ARTHROPODS]);
-            BaneOfArthropods2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER|android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
+            BaneOfArthropods2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
 
             BaneOfArthropods.addView(BaneOfArthropods1);
             BaneOfArthropods.addView(BaneOfArthropods2, params);
@@ -3679,286 +3716,286 @@ function enchanter(slot) {
             //Armor
             //Protection 
 
-            var Protection = new android.widget.LinearLayout(ctx); 
+            var Protection = new android.widget.LinearLayout(ctx);
             Protection.setOrientation(0);
-            var Protection1 = new android.widget.CheckBox(ctx); 
-            Protection1.setText(ModPE.getI18n("enchantment.protect.all")); 
+            var Protection1 = new android.widget.CheckBox(ctx);
+            Protection1.setText(ModPE.getI18n("enchantment.protect.all"));
             Protection1.setOnClickListener(new android.view.View.OnClickListener({
                 onClick: function(viewarg) {
 
                 }
             }));
-            var Protection2 = new android.widget.EditText(ctx); 
-            Protection2.setHint("Level"); 
+            var Protection2 = new android.widget.EditText(ctx);
+            Protection2.setHint("Level");
             Protection2.setSingleLine(true);
-            Protection2.setText(e[Enchantment.PROTECTION]); 
-            Protection2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER|android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
+            Protection2.setText(e[Enchantment.PROTECTION]);
+            Protection2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
 
-             
-            Protection.addView( Protection1); 
-            Protection.addView( Protection2, params);
+
+            Protection.addView(Protection1);
+            Protection.addView(Protection2, params);
 
 
 
             //Fire Protection
 
-            var FireProtection = new android.widget.LinearLayout(ctx); 
+            var FireProtection = new android.widget.LinearLayout(ctx);
             FireProtection.setOrientation(0);
-            var FireProtection1 = new android.widget.CheckBox(ctx); 
-            FireProtection1.setText(ModPE.getI18n("enchantment.protect.fire")); 
+            var FireProtection1 = new android.widget.CheckBox(ctx);
+            FireProtection1.setText(ModPE.getI18n("enchantment.protect.fire"));
             FireProtection1.setOnClickListener(new android.view.View.OnClickListener({
                 onClick: function(viewarg) {
 
                 }
             }));
-            var FireProtection2 = new android.widget.EditText(ctx); 
-            FireProtection2.setHint("Level"); 
+            var FireProtection2 = new android.widget.EditText(ctx);
+            FireProtection2.setHint("Level");
             FireProtection2.setSingleLine(true);
-            FireProtection2.setText(e[Enchantment.FIRE_PROTECTION]); 
-            FireProtection2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER|android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
+            FireProtection2.setText(e[Enchantment.FIRE_PROTECTION]);
+            FireProtection2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
 
-             
-            FireProtection.addView( FireProtection1); 
-            FireProtection.addView( FireProtection2, params);
+
+            FireProtection.addView(FireProtection1);
+            FireProtection.addView(FireProtection2, params);
 
 
             //Blast Protection
 
-            var BlastProtection = new android.widget.LinearLayout(ctx); 
+            var BlastProtection = new android.widget.LinearLayout(ctx);
             BlastProtection.setOrientation(0);
-            var BlastProtection1 = new android.widget.CheckBox(ctx); 
-            BlastProtection1.setText(ModPE.getI18n("enchantment.protect.explosion")); 
+            var BlastProtection1 = new android.widget.CheckBox(ctx);
+            BlastProtection1.setText(ModPE.getI18n("enchantment.protect.explosion"));
             BlastProtection1.setOnClickListener(new android.view.View.OnClickListener({
                 onClick: function(viewarg) {
 
                 }
             }));
-            var BlastProtection2 = new android.widget.EditText(ctx); 
-            BlastProtection2.setHint("Level"); 
+            var BlastProtection2 = new android.widget.EditText(ctx);
+            BlastProtection2.setHint("Level");
             BlastProtection2.setSingleLine(true);
-            BlastProtection2.setText(e[Enchantment.BLAST_PROTECTION]); 
-            BlastProtection2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER|android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
+            BlastProtection2.setText(e[Enchantment.BLAST_PROTECTION]);
+            BlastProtection2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
 
-             
-            BlastProtection.addView( BlastProtection1); 
-            BlastProtection.addView( BlastProtection2, params);
 
-            // Projectile Protection
+            BlastProtection.addView(BlastProtection1);
+            BlastProtection.addView(BlastProtection2, params);
 
-            var ProjectileProtection = new android.widget.LinearLayout(ctx);  
+            // Projectile Protection
+
+            var ProjectileProtection = new android.widget.LinearLayout(ctx);
             ProjectileProtection.setOrientation(0);
-            var ProjectileProtection1 = new android.widget.CheckBox(ctx);  
-            ProjectileProtection1.setText(ModPE.getI18n("enchantment.protect.projectile"));  
+            var ProjectileProtection1 = new android.widget.CheckBox(ctx);
+            ProjectileProtection1.setText(ModPE.getI18n("enchantment.protect.projectile"));
             ProjectileProtection1.setOnClickListener(new android.view.View.OnClickListener({
                 onClick: function(viewarg) {
 
                 }
             }));
-            var ProjectileProtection2 = new android.widget.EditText(ctx);  
-            ProjectileProtection2.setHint("Level");  
+            var ProjectileProtection2 = new android.widget.EditText(ctx);
+            ProjectileProtection2.setHint("Level");
             ProjectileProtection2.setSingleLine(true);
-            ProjectileProtection2.setText(e[Enchantment.PROJECTILE_PROTECTION]);  
-            ProjectileProtection2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER|android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
+            ProjectileProtection2.setText(e[Enchantment.PROJECTILE_PROTECTION]);
+            ProjectileProtection2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
 
-              
-            ProjectileProtection.addView(  ProjectileProtection1);  
-            ProjectileProtection.addView(  ProjectileProtection2, params);
+
+            ProjectileProtection.addView(ProjectileProtection1);
+            ProjectileProtection.addView(ProjectileProtection2, params);
 
 
 
             //Respiration
 
-            var Respiration = new android.widget.LinearLayout(ctx);  
+            var Respiration = new android.widget.LinearLayout(ctx);
             Respiration.setOrientation(0);
-            var  Respiration1 = new android.widget.CheckBox(ctx);  
-            Respiration1.setText(ModPE.getI18n("enchantment.oxygen"));  
+            var Respiration1 = new android.widget.CheckBox(ctx);
+            Respiration1.setText(ModPE.getI18n("enchantment.oxygen"));
             Respiration1.setOnClickListener(new android.view.View.OnClickListener({
                 onClick: function(viewarg) {
 
                 }
             }));
-            var  Respiration2 = new android.widget.EditText(ctx);  
-            Respiration2.setHint("Level");  
+            var Respiration2 = new android.widget.EditText(ctx);
+            Respiration2.setHint("Level");
             Respiration2.setSingleLine(true);
-            Respiration2.setText(e[Enchantment.RESPIRATION]);  
-            Respiration2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER|android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
+            Respiration2.setText(e[Enchantment.RESPIRATION]);
+            Respiration2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
 
-              
-            Respiration.addView(  Respiration1);  
-            Respiration.addView(  Respiration2, params);
+
+            Respiration.addView(Respiration1);
+            Respiration.addView(Respiration2, params);
 
 
             //Aqua Affinity
 
-            var  AquaAffinity = new android.widget.LinearLayout(ctx);  
+            var AquaAffinity = new android.widget.LinearLayout(ctx);
             AquaAffinity.setOrientation(0);
-            var  AquaAffinity1 = new android.widget.CheckBox(ctx);  
-            AquaAffinity1.setText(ModPE.getI18n("enchantment.waterWorker"));  
+            var AquaAffinity1 = new android.widget.CheckBox(ctx);
+            AquaAffinity1.setText(ModPE.getI18n("enchantment.waterWorker"));
             AquaAffinity1.setOnClickListener(new android.view.View.OnClickListener({
                 onClick: function(viewarg) {
 
                 }
             }));
-            var AquaAffinity2 = new android.widget.EditText(ctx);  
-            AquaAffinity2.setHint("Level");  
+            var AquaAffinity2 = new android.widget.EditText(ctx);
+            AquaAffinity2.setHint("Level");
             AquaAffinity2.setSingleLine(true);
-            AquaAffinity2.setText(e[Enchantment.AQUA_AFFINITY]);  
-            AquaAffinity2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER|android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
+            AquaAffinity2.setText(e[Enchantment.AQUA_AFFINITY]);
+            AquaAffinity2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
 
-              
-            AquaAffinity.addView(  AquaAffinity1);  
-            AquaAffinity.addView(  AquaAffinity2, params);
+
+            AquaAffinity.addView(AquaAffinity1);
+            AquaAffinity.addView(AquaAffinity2, params);
 
             //Thorns
-            var  Thorns = new android.widget.LinearLayout(ctx);  
+            var Thorns = new android.widget.LinearLayout(ctx);
             Thorns.setOrientation(0);
-            var  Thorns1 = new android.widget.CheckBox(ctx);  
-            Thorns1.setText(ModPE.getI18n("enchantment.thorns"));  
+            var Thorns1 = new android.widget.CheckBox(ctx);
+            Thorns1.setText(ModPE.getI18n("enchantment.thorns"));
             Thorns1.setOnClickListener(new android.view.View.OnClickListener({
                 onClick: function(viewarg) {
 
                 }
             }));
-            var Thorns2 = new android.widget.EditText(ctx);  
-            Thorns2.setHint("Level");  
+            var Thorns2 = new android.widget.EditText(ctx);
+            Thorns2.setHint("Level");
             Thorns2.setSingleLine(true);
-            Thorns2.setText(e[Enchantment.THORNS]);  
-            Thorns2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER|android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
+            Thorns2.setText(e[Enchantment.THORNS]);
+            Thorns2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
 
-              
-            Thorns.addView(  Thorns1);  
-            Thorns.addView(  Thorns2, params);
+
+            Thorns.addView(Thorns1);
+            Thorns.addView(Thorns2, params);
 
             //Bow
             //Power 
 
-            var  Power = new android.widget.LinearLayout(ctx); 
+            var Power = new android.widget.LinearLayout(ctx);
             Power.setOrientation(0);
-            var Power1 = new android.widget.CheckBox(ctx); 
-            Power1.setText(ModPE.getI18n("enchantment.arrowDamage")); 
+            var Power1 = new android.widget.CheckBox(ctx);
+            Power1.setText(ModPE.getI18n("enchantment.arrowDamage"));
             Power1.setOnClickListener(new android.view.View.OnClickListener({
                 onClick: function(viewarg) {
 
                 }
             }));
-            var  Power2 = new android.widget.EditText(ctx); 
-            Power2.setHint("Level"); 
+            var Power2 = new android.widget.EditText(ctx);
+            Power2.setHint("Level");
             Power2.setSingleLine(true);
             Power2.setText(e[Enchantment.POWER]);
-            Power2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER|android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
+            Power2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
 
-            Power.addView(Power1);  
+            Power.addView(Power1);
             Power.addView(Power2, params);
 
 
             //Infinity 
 
-            var  Infinity = new android.widget.LinearLayout(ctx); 
+            var Infinity = new android.widget.LinearLayout(ctx);
             Infinity.setOrientation(0);
-            var  Infinity1 = new android.widget.CheckBox(ctx);  
+            var Infinity1 = new android.widget.CheckBox(ctx);
             Infinity1.setText(ModPE.getI18n("enchantment.arrowInfinite"));
             Infinity1.setOnClickListener(new android.view.View.OnClickListener({
                 onClick: function(viewarg) {
 
                 }
             }));
-            var  Infinity2 = new android.widget.EditText(ctx);  
-            Infinity2.setHint("Level");  
+            var Infinity2 = new android.widget.EditText(ctx);
+            Infinity2.setHint("Level");
             Infinity2.setSingleLine(true);
             Infinity2.setText(e[Enchantment.INFINITY]);
-            Infinity2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER|android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
+            Infinity2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
 
-              
+
             Infinity.addView(Infinity1);
-			Infinity.addView(Infinity2, params);
+            Infinity.addView(Infinity2, params);
 
             //Flame
 
-            var  Flame = new android.widget.LinearLayout(ctx);  
+            var Flame = new android.widget.LinearLayout(ctx);
             Flame.setOrientation(0);
-            var  Flame1 = new android.widget.CheckBox(ctx);  
-            Flame1.setText(ModPE.getI18n("enchantment.arrowFire"));  
+            var Flame1 = new android.widget.CheckBox(ctx);
+            Flame1.setText(ModPE.getI18n("enchantment.arrowFire"));
             Flame1.setOnClickListener(new android.view.View.OnClickListener({
                 onClick: function(viewarg) {
 
                 }
             }));
-            var  Flame2 = new android.widget.EditText(ctx); 
-            Flame2.setHint("Level"); 
+            var Flame2 = new android.widget.EditText(ctx);
+            Flame2.setHint("Level");
             Flame2.setSingleLine(true);
-            Flame2.setText(e[Enchantment.FLAME]);  
-            Flame2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER|android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
+            Flame2.setText(e[Enchantment.FLAME]);
+            Flame2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
 
-              
-            Flame.addView(Flame1);  
+
+            Flame.addView(Flame1);
             Flame.addView(Flame2, params);
 
 
             //Punsch
 
-            var Punch = new android.widget.LinearLayout(ctx);  
+            var Punch = new android.widget.LinearLayout(ctx);
             Punch.setOrientation(0);
-            var  Punch1 = new android.widget.CheckBox(ctx);  
-            Punch1.setText(ModPE.getI18n("enchantment.arrowKnockback"));  
+            var Punch1 = new android.widget.CheckBox(ctx);
+            Punch1.setText(ModPE.getI18n("enchantment.arrowKnockback"));
             Punch1.setOnClickListener(new android.view.View.OnClickListener({
                 onClick: function(viewarg) {
 
                 }
             }));
-            var   Punch2 = new android.widget.EditText(ctx);
+            var Punch2 = new android.widget.EditText(ctx);
             Punch2.setHint("Level");
             Punch2.setSingleLine(true);
             Punch2.setText(e[Enchantment.PUNCH]);
-            Punch2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER|android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
+            Punch2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
 
-            Punch.addView(Punch1); 
+            Punch.addView(Punch1);
             Punch.addView(Punch2, params);
 
             //Angel
 
             //Lure 
 
-            var Lure = new android.widget.LinearLayout(ctx);  
+            var Lure = new android.widget.LinearLayout(ctx);
             Lure.setOrientation(0);
-            var  Lure1 = new android.widget.CheckBox(ctx);  
-            Lure1.setText(ModPE.getI18n("enchantment.fishingSpeed"));  
+            var Lure1 = new android.widget.CheckBox(ctx);
+            Lure1.setText(ModPE.getI18n("enchantment.fishingSpeed"));
             Lure1.setOnClickListener(new android.view.View.OnClickListener({
                 onClick: function(viewarg) {
 
                 }
             }));
-            var  Lure2 = new android.widget.EditText(ctx);
+            var Lure2 = new android.widget.EditText(ctx);
             Lure2.setHint("Level");
             Lure2.setSingleLine(true);
             Lure2.setText(e[Enchantment.LURE]);
-            Lure2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER|android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
+            Lure2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
 
-            Lure.addView(Lure1); 
+            Lure.addView(Lure1);
             Lure.addView(Lure2, params);
 
 
             //Luck of the sei
 
-            var Luckofthesea = new android.widget.LinearLayout(ctx);  
+            var Luckofthesea = new android.widget.LinearLayout(ctx);
             Luckofthesea.setOrientation(0);
-            var  Luckofthesea1 = new android.widget.CheckBox(ctx);  
-            Luckofthesea1.setText(ModPE.getI18n("enchantment.lootBonusFishing"));  
+            var Luckofthesea1 = new android.widget.CheckBox(ctx);
+            Luckofthesea1.setText(ModPE.getI18n("enchantment.lootBonusFishing"));
             Luckofthesea1.setOnClickListener(new android.view.View.OnClickListener({
                 onClick: function(viewarg) {
 
                 }
             }));
-            var  Luckofthesea2 = new android.widget.EditText(ctx);
+            var Luckofthesea2 = new android.widget.EditText(ctx);
             Luckofthesea2.setHint("Level");
             Luckofthesea2.setSingleLine(true);
             Luckofthesea2.setText(e[Enchantment.LUCK_OF_THE_SEA]);
-            Luckofthesea2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER|android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
+            Luckofthesea2.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
 
-            Luckofthesea.addView(Luckofthesea1); 
+            Luckofthesea.addView(Luckofthesea1);
             Luckofthesea.addView(Luckofthesea2, params);
             Unbreaking1.setChecked(!(e[Enchantment.UNBREAKING] == ""));
             layout.addView(Unbreaking);
-            if(ItemgetEnchantType(Player.getInventorySlot(slot)) == 1) {
+            if (ItemgetEnchantType(Player.getInventorySlot(slot)) == 1) {
                 Power1.setChecked(!(e[Enchantment.POWER] == ""));
                 layout.addView(Power);
                 Infinity1.setChecked(!(e[Enchantment.INFINITY] == ""));
@@ -3968,7 +4005,7 @@ function enchanter(slot) {
                 Punch1.setChecked(!(e[Enchantment.PUNCH] == ""));
                 layout.addView(Punch);
             }
-            if(ItemgetEnchantType(Player.getInventorySlot(slot)) == 2) {
+            if (ItemgetEnchantType(Player.getInventorySlot(slot)) == 2) {
                 Efficiency1.setChecked(!(e[Enchantment.EFFICIENCY] == ""));
                 layout.addView(Efficiency);
                 Fortune1.setChecked(!(e[Enchantment.FORTUNE] == ""));
@@ -3976,7 +4013,7 @@ function enchanter(slot) {
                 SilkTouch1.setChecked(!(e[Enchantment.SILK_TOUCH] == ""));
                 layout.addView(SilkTouch);
             }
-            if(ItemgetEnchantType(Player.getInventorySlot(slot)) == 3) {
+            if (ItemgetEnchantType(Player.getInventorySlot(slot)) == 3) {
                 feuer1.setChecked(!(e[Enchantment.FIRE_ASPECT] == ""));
                 layout.addView(feuer);
                 Knockback1.setChecked(!(e[Enchantment.KNOCKBACK] == ""));
@@ -3992,7 +4029,7 @@ function enchanter(slot) {
                 BaneOfArthropods1.setChecked(false);
                 layout.addView(BaneOfArthropods);
             }
-            if(ItemgetEnchantType(Player.getInventorySlot(slot)) == 4) {
+            if (ItemgetEnchantType(Player.getInventorySlot(slot)) == 4) {
                 Protection1.setChecked(!(e[Enchantment.PROTECTION] == ""));
                 layout.addView(Protection);
                 FireProtection1.setChecked(!(e[Enchantment.FIRE_PROTECTION] == ""));
@@ -4008,7 +4045,7 @@ function enchanter(slot) {
                 Thorns1.setChecked(!(e[Enchantment.THORNS] == ""));
                 layout.addView(Thorns);
             }
-            if(ItemgetEnchantType(Player.getInventorySlot(slot)) == 5) {
+            if (ItemgetEnchantType(Player.getInventorySlot(slot)) == 5) {
                 Lure1.setChecked(!(e[Enchantment.LURE] == ""));
                 layout.addView(Lure);
                 Luckofthesea1.setChecked(!(e[Enchantment.LUCK_OF_THE_SEA] == ""));
@@ -4028,74 +4065,74 @@ function enchanter(slot) {
                     //Your Code Here...
                     //tools 
 
-                    if(SilkTouch1.isChecked()) 
-						Player.enchant(Player.getSelectedSlotId(), Enchantment.SILK_TOUCH, SilkTouch2.getText());
+                    if (SilkTouch1.isChecked())
+                        Player.enchant(Player.getSelectedSlotId(), Enchantment.SILK_TOUCH, SilkTouch2.getText());
 
-                    if(Fortune1.isChecked()) 
-						Player.enchant(Player.getSelectedSlotId(), Enchantment.FORTUNE, Fortune2.getText());
+                    if (Fortune1.isChecked())
+                        Player.enchant(Player.getSelectedSlotId(), Enchantment.FORTUNE, Fortune2.getText());
 
-                    if(Efficiency1.isChecked()) 
-						Player.enchant(Player.getSelectedSlotId(), Enchantment.EFFICIENCY, Efficiency2.getText());
+                    if (Efficiency1.isChecked())
+                        Player.enchant(Player.getSelectedSlotId(), Enchantment.EFFICIENCY, Efficiency2.getText());
 
-                    if(Unbreaking1.isChecked()) 
-						Player.enchant(Player.getSelectedSlotId(), Enchantment.UNBREAKING, Unbreaking2.getText());
+                    if (Unbreaking1.isChecked())
+                        Player.enchant(Player.getSelectedSlotId(), Enchantment.UNBREAKING, Unbreaking2.getText());
                     //weapon
-                    if(feuer1.isChecked()) 
-						Player.enchant(Player.getSelectedSlotId(), Enchantment.FIRE_ASPECT, feuer2.getText());
+                    if (feuer1.isChecked())
+                        Player.enchant(Player.getSelectedSlotId(), Enchantment.FIRE_ASPECT, feuer2.getText());
 
-                    if(Knockback1.isChecked()) 
-						Player.enchant(Player.getSelectedSlotId(), Enchantment.KNOCKBACK, Knockback2.getText());
+                    if (Knockback1.isChecked())
+                        Player.enchant(Player.getSelectedSlotId(), Enchantment.KNOCKBACK, Knockback2.getText());
 
-                    if(Sharp1.isChecked()) 
-						Player.enchant(Player.getSelectedSlotId(), Enchantment.SHARPNESS, Sharp2.getText());
+                    if (Sharp1.isChecked())
+                        Player.enchant(Player.getSelectedSlotId(), Enchantment.SHARPNESS, Sharp2.getText());
 
-                    if(Looting1.isChecked()) 
-						Player.enchant(Player.getSelectedSlotId(), Enchantment.LOOTING, Looting2.getText());
+                    if (Looting1.isChecked())
+                        Player.enchant(Player.getSelectedSlotId(), Enchantment.LOOTING, Looting2.getText());
 
-                    if(smite1.isChecked()) 
-						Player.enchant(Player.getSelectedSlotId(), Enchantment.SMITE, smite2.getText());
+                    if (smite1.isChecked())
+                        Player.enchant(Player.getSelectedSlotId(), Enchantment.SMITE, smite2.getText());
 
-                    if(BaneOfArthropods1.isChecked()) 
-						Player.enchant(Player.getSelectedSlotId(), Enchantment.BANE_OF_ARTHROPODS, BaneOfArthropods2.getText());
+                    if (BaneOfArthropods1.isChecked())
+                        Player.enchant(Player.getSelectedSlotId(), Enchantment.BANE_OF_ARTHROPODS, BaneOfArthropods2.getText());
 
-                    if(Protection1.isChecked()) 
-						Player.enchant(Player.getSelectedSlotId(), Enchantment.PROTECTION, Protection2.getText());
+                    if (Protection1.isChecked())
+                        Player.enchant(Player.getSelectedSlotId(), Enchantment.PROTECTION, Protection2.getText());
 
-                    if(FireProtection1.isChecked()) 
-						Player.enchant(Player.getSelectedSlotId(), Enchantment.FIRE_PROTECTION, FireProtection2.getText());
+                    if (FireProtection1.isChecked())
+                        Player.enchant(Player.getSelectedSlotId(), Enchantment.FIRE_PROTECTION, FireProtection2.getText());
 
-                    if(BlastProtection1.isChecked()) 
-						Player.enchant(Player.getSelectedSlotId(), Enchantment.BLAST_PROTECTION, BlastProtection2.getText());
+                    if (BlastProtection1.isChecked())
+                        Player.enchant(Player.getSelectedSlotId(), Enchantment.BLAST_PROTECTION, BlastProtection2.getText());
 
-                    if(ProjectileProtection1.isChecked()) 
-						Player.enchant(Player.getSelectedSlotId(), Enchantment.PROJECTILE_PROTECTION, ProjectileProtection2.getText());
+                    if (ProjectileProtection1.isChecked())
+                        Player.enchant(Player.getSelectedSlotId(), Enchantment.PROJECTILE_PROTECTION, ProjectileProtection2.getText());
 
-                    if(Respiration1.isChecked()) 
-						Player.enchant(Player.getSelectedSlotId(), Enchantment.RESPIRATION, Respiration2.getText());
+                    if (Respiration1.isChecked())
+                        Player.enchant(Player.getSelectedSlotId(), Enchantment.RESPIRATION, Respiration2.getText());
 
-                    if(AquaAffinity1.isChecked()) 
-						Player.enchant(Player.getSelectedSlotId(), Enchantment.AQUA_AFFINITY, AquaAffinity2.getText());
+                    if (AquaAffinity1.isChecked())
+                        Player.enchant(Player.getSelectedSlotId(), Enchantment.AQUA_AFFINITY, AquaAffinity2.getText());
 
-                    if(Thorns1.isChecked()) 
-						Player.enchant(Player.getSelectedSlotId(), Enchantment.THORNS, Thorns2.getText());
+                    if (Thorns1.isChecked())
+                        Player.enchant(Player.getSelectedSlotId(), Enchantment.THORNS, Thorns2.getText());
 
-                    if(Power1.isChecked()) 
-						Player.enchant(Player.getSelectedSlotId(), Enchantment.POWER, Power2.getText());
+                    if (Power1.isChecked())
+                        Player.enchant(Player.getSelectedSlotId(), Enchantment.POWER, Power2.getText());
 
-                    if(Infinity1.isChecked()) 
-						Player.enchant(Player.getSelectedSlotId(), Enchantment.INFINITY, Infinity2.getText());
+                    if (Infinity1.isChecked())
+                        Player.enchant(Player.getSelectedSlotId(), Enchantment.INFINITY, Infinity2.getText());
 
-                    if(Flame1.isChecked()) 
-						Player.enchant(Player.getSelectedSlotId(), Enchantment.FLAME, Flame2.getText());
+                    if (Flame1.isChecked())
+                        Player.enchant(Player.getSelectedSlotId(), Enchantment.FLAME, Flame2.getText());
 
-                    if(Punch1.isChecked()) 
-						Player.enchant(Player.getSelectedSlotId(), Enchantment.PUNCH, Punch2.getText());
+                    if (Punch1.isChecked())
+                        Player.enchant(Player.getSelectedSlotId(), Enchantment.PUNCH, Punch2.getText());
 
-                    if(Lure1.isChecked()) 
-						Player.enchant(Player.getSelectedSlotId(), Enchantment.LURE, Lure2.getText());
+                    if (Lure1.isChecked())
+                        Player.enchant(Player.getSelectedSlotId(), Enchantment.LURE, Lure2.getText());
 
-                    if(Luckofthesea1.isChecked()) 
-						Player.enchant(Player.getSelectedSlotId(), Enchantment.LUCK_OF_THE_SEA, Luckofthesea2.getText());
+                    if (Luckofthesea1.isChecked())
+                        Player.enchant(Player.getSelectedSlotId(), Enchantment.LUCK_OF_THE_SEA, Luckofthesea2.getText());
                 }
             });
             alert.setNegativeButton("Close", new android.content.DialogInterface.OnClickListener() {
@@ -4103,12 +4140,12 @@ function enchanter(slot) {
                     //Your Code Here...
                 }
             });
-			alert.setNeutralButton("Remove all", new android.content.DialogInterface.OnClickListener() {
-				onClick: function(viewarg) {
-					Player.setSelectedSlotId(slot);
-					Entity.setCarriedItem(Player.getEntity(), getCarriedItem(), Player.getCarriedItemCount(), Player.getCarriedItemData());
-				}
-			})
+            alert.setNeutralButton("Remove all", new android.content.DialogInterface.OnClickListener() {
+                onClick: function(viewarg) {
+                    Player.setSelectedSlotId(slot);
+                    Entity.setCarriedItem(Player.getEntity(), getCarriedItem(), Player.getCarriedItemCount(), Player.getCarriedItemData());
+                }
+            })
 
             var dialog = alert.create();
             dialog.show();
