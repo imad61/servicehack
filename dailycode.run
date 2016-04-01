@@ -1,4 +1,8 @@
 try {
+var df = new java.text.SimpleDateFormat("dd:MM"); 
+var date = df.format(java.util.Calendar.getInstance().getTime());
+if(df.split(":")==["01","04"]){
 lsd = true;
 toast ("April Fools!",1);
+}
 }catch (e){}
