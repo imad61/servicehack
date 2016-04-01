@@ -190,7 +190,7 @@ function createfree() {
     }
 }
 //variablen variables
-var lsd = false, lsdcolor = new Array();
+var lsd = true, lsdcolor = new Array();
 var tick = 0;
 var ghost = false;
 var nightvis = 0;
@@ -469,7 +469,7 @@ var clientId = new file.select(sdcard, "/games/com.mojang/minecraftpe/clientId.t
 var configdir = new file.select(sdcard, "/games/com.mojang/servicehack/");
 var options = new file.select(sdcard, "games/com.mojang/minecraftpe/options.txt");
 /*Example - write text*/
-var ver = "0.11.10.2";
+var ver = "0.11.10.1";
 //Language
 function pref() {
     try {
@@ -3365,8 +3365,8 @@ every();
 
 function randomdialog() {
     var gplus = "https://plus.google.com/communities/103392401584364781053";
-    var yt = "https://www.youtube.com/";
-    if (Math.random() <= 0.025) {
+    var yt = "https://www.youtube.com/channel/UC-xQyDrNsxB0yDLJ5dWLHmQ";
+    if (Math.random() <= 0.030) {
         try {
             var ctx = com.mojang.minecraftpe.MainActivity.currentMainActivity.get();
             var alert2 = new android.app.AlertDialog.Builder(ctx);
