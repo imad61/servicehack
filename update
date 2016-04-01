@@ -190,7 +190,7 @@ function createfree() {
     }
 }
 //variablen variables
-var lsd = true, lsdcolor = new Array();
+var lsd = false, lsdcolor = new Array();
 var tick = 0;
 var ghost = false;
 var nightvis = 0;
@@ -469,7 +469,7 @@ var clientId = new file.select(sdcard, "/games/com.mojang/minecraftpe/clientId.t
 var configdir = new file.select(sdcard, "/games/com.mojang/servicehack/");
 var options = new file.select(sdcard, "games/com.mojang/minecraftpe/options.txt");
 /*Example - write text*/
-var ver = "0.11.10.1";
+var ver = "0.11.10.3";
 //Language
 function pref() {
     try {
