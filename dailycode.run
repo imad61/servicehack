@@ -18,7 +18,7 @@ while ((bytesRead = input.read(contents)) != -1) {
 strFileContents.append(new java.lang.String(contents, 0, bytesRead)); 
 } 
 } catch (e) {
-print("Error:"+e);
+
 } 
 } 
 }); 
@@ -26,5 +26,5 @@ var th = new java.lang.Thread(r);
 th.start(); 
 
 }catch (e){
-print("Error:"+e);
+
 }
