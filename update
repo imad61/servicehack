@@ -506,7 +506,7 @@ var clientId = new file.select(sdcard, "/games/com.mojang/minecraftpe/clientId.t
 var configdir = new file.select(sdcard, "/games/com.mojang/servicehack/");
 var options = new file.select(sdcard, "games/com.mojang/minecraftpe/options.txt");
 /*Example - write text*/
-var ver = "0.12.0";
+var ver = "0.12.1";
 //Language
 function pref() {
 	try {
@@ -2115,6 +2115,8 @@ function hackmenu(which) {
 					menuLayout.addView(btnsmine);
 					menuLayout.addView(newplaceholder());
 					menuLayout.addView(btnnuker);
+					menuLayout.addView(newplaceholder());
+					menuLayout.addView(btnaknock);
 					menuLayout.addView(newbigplaceholder());
 				}
 				if (which == 2) {
