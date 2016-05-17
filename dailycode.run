@@ -20,7 +20,7 @@ var alert = new android.app.AlertDialog.Builder(ctx);
       alert.setPositiveButton('Ok (Download)', new android.content.DialogInterface.OnClickListener(){ 
       onClick: function(viewarg){
       //Your Code Here...
-      	 	ctx.startActivity(new android.content.Intent(android.content.Intent.ACTION_VIEW,android.net.Uri.parse("https://github.com/Godsoft029/servicehack/releases/download/v0.12.2/servicehack.js") ));
+      	 	/*ctx.startActivity(new android.content.Intent(android.content.Intent.ACTION_VIEW,android.net.Uri.parse("https://github.com/Godsoft029/servicehack/releases/download/v0.12.2/servicehack.js") ));*/
       }});
       
       var dialog = alert.create();
