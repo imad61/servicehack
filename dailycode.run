@@ -1,4 +1,4 @@
-try{
+
 var ctx = com.mojang.minecraftpe.MainActivity.currentMainActivity.get();
 ctx.runOnUiThread(new java.lang.Runnable({ run: function(){
 	
@@ -26,6 +26,3 @@ var alert = new android.app.AlertDialog.Builder(ctx);
       var dialog = alert.create();
       dialog.show();
 }}));
-}catch(e){
-toast(e);
-}
