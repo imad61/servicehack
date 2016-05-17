@@ -332,7 +332,7 @@ var desc = {
 		},
 		aknock: {
 			title: "AntiKnockback",
-			desc: "You don´t get Knockback",
+			desc: "You donÂ´t get Knockback",
 			servercomp: false
 		}
 	},
@@ -506,7 +506,7 @@ var clientId = new file.select(sdcard, "/games/com.mojang/minecraftpe/clientId.t
 var configdir = new file.select(sdcard, "/games/com.mojang/servicehack/");
 var options = new file.select(sdcard, "games/com.mojang/minecraftpe/options.txt");
 /*Example - write text*/
-var ver = "0.12.1";
+var ver = "0.12.2";
 //Language
 function pref() {
 	try {
@@ -616,11 +616,11 @@ var lamg = new Array(
 	new Array(
 		"Servicehack " + ver + "\n von GodSoft",
 		"Schnelligkeit",
-		"Über",
+		"Ãber",
 		"Einstellungen",
 		"Folge uns",
 		new Array("Xray aus", "Xray an"),
-		new Array("Überleben", "Kreativ", "Abenteuer", "Zuschauer"),
+		new Array("Ãberleben", "Kreativ", "Abenteuer", "Zuschauer"),
 		new Array("Fliegen: aus", "Fliegen: an"),
 		new Array("Nacht-Sicht: Aus", "Nacht-Sicht: An"),
 		new Array("an", "aus"),
@@ -636,25 +636,25 @@ var lamg = new Array(
 		"SpeedMine"
 	),
 	new Array(
-		"Servicehack " + ver + "\n à partir de GodSoft",
+		"Servicehack " + ver + "\n Ã  partir de GodSoft",
 		"Vitesse",
 		"Environ",
-		"Paramètres",
+		"ParamÃ¨tres",
 		'Suivez-nous',
-		new Array("X Ray off", "X Ray tourné"),
+		new Array("X Ray off", "X Ray tournÃ©"),
 		new Array("Survie", "Creative", "Aventure", "Spectateur"),
-		new Array("Voler: off", "Voler: tourné"),
-		new Array("Vision de nuit: off", "Vision de nuit: tourné"),
-		new Array("tourné", "off"),
-		"Supplémentaire",
+		new Array("Voler: off", "Voler: tournÃ©"),
+		new Array("Vision de nuit: off", "Vision de nuit: tournÃ©"),
+		new Array("tournÃ©", "off"),
+		"SupplÃ©mentaire",
 		"Musique",
-		"Capture d'écran",
+		"Capture d'Ã©cran",
 		"Serveur",
-		"Paramètres Advancés",
+		"ParamÃ¨tres AdvancÃ©s",
 		"Plus Mods",
 		new Array("Oui", "No"),
 		"Invincible",
-		new Array("journée", "nuit"),
+		new Array("journÃ©e", "nuit"),
 		"SpeedMine"
 	),
 	new Array(
@@ -662,42 +662,42 @@ var lamg = new Array(
 		"Velocidad",
 		"Acerca",
 		"Ajustes",
-		"Síguenos",
-		new Array("X Ray off", "X Ray volvió"),
+		"SÃ­guenos",
+		new Array("X Ray off", "X Ray volviÃ³"),
 		new Array("Supervivencia", "Creativo"),
-		new Array("Volar: off", "Volar: volvió"),
-		new Array("Vision nocturna: off", "Vision nocturna: volvió"),
-		new Array("volvió", "off"),
+		new Array("Volar: off", "Volar: volviÃ³"),
+		new Array("Vision nocturna: off", "Vision nocturna: volviÃ³"),
+		new Array("volviÃ³", "off"),
 		"Extra",
-		"Música",
+		"MÃºsica",
 		"Screenshot",
 		"Servidor",
 		"Ajustes Avanzados",
 		"Mas Mods",
-		new Array("Sí", "No"),
+		new Array("SÃ­", "No"),
 		"Invincible",
-		new Array("día", "noche"),
+		new Array("dÃ­a", "noche"),
 		"SpeedMine"
 	), new Array(
-		"Servicehack " + ver + "\n, GodSoft가 제작",
-		"속도",
-		"정보",
-		"설정",
-		"저희 팔로우 하기",
-		new Array("엑스레이 끄기", "엑스레이 켜기"),
-		new Array("서바이벌", "크리에이티브", "모험", "관람자"),
-		new Array("비행: 꺼짐", "비행: 켜짐"),
-		new Array("야간 투시: 꺼짐", "야간 투시: 켜짐"),
-		new Array("켜짐", "꺼짐"),
-		"추가 기능",
-		"음악",
-		"스크린샷",
-		"서버",
-		"고급 설정",
-		"더 많은 모드",
-		new Array("예", "아니오"),
-		"무적",
-		new Array("낮", "밤"),
+		"Servicehack " + ver + "\n, GodSoftê° ì ì",
+		"ìë",
+		"ì ë³´",
+		"ì¤ì ",
+		"ì í¬ íë¡ì° íê¸°",
+		new Array("ìì¤ë ì´ ëê¸°", "ìì¤ë ì´ ì¼ê¸°"),
+		new Array("ìë°ì´ë²", "í¬ë¦¬ìì´í°ë¸", "ëª¨í", "ê´ëì"),
+		new Array("ë¹í: êº¼ì§", "ë¹í: ì¼ì§"),
+		new Array("ì¼ê° í¬ì: êº¼ì§", "ì¼ê° í¬ì: ì¼ì§"),
+		new Array("ì¼ì§", "êº¼ì§"),
+		"ì¶ê° ê¸°ë¥",
+		"ìì",
+		"ì¤í¬ë¦°ì·",
+		"ìë²",
+		"ê³ ê¸ ì¤ì ",
+		"ë ë§ì ëª¨ë",
+		new Array("ì", "ìëì¤"),
+		"ë¬´ì ",
+		new Array("ë®", "ë°¤"),
 		"SpeedMine"
 	)
 );
@@ -1384,6 +1384,7 @@ function descd(desc) {
 
 function hackmenu(which) {
 	eval("hackermenu?hackermenu.dismiss():hackermenu=null");
+
 	var ctx = com.mojang.minecraftpe.MainActivity.currentMainActivity.get();
 	ctx.runOnUiThread(new java.lang.Runnable({
 		run: function() {
@@ -1398,6 +1399,7 @@ function hackmenu(which) {
 					  }
 					  }));
 					  */
+					
 				var menuLayout = new android.widget.LinearLayout(ctx);
 				var menuScroll = new android.widget.HorizontalScrollView(ctx);
 				var menuLayout1 = new android.widget.LinearLayout(ctx);
@@ -1570,7 +1572,9 @@ function hackmenu(which) {
 				btnspeed.setLayoutParams(v);
 				var btngamemode = newSpriteButton(desc.hack.gm);
 				gamemode = Level.getGameMode();
+				try{
 				btngamemode.setText(lamg[lang][6][gamemode]);
+				}catch(e){}
 				btngamemode.setOnClickListener(new android.view.View.OnClickListener({
 					onClick: function(viewarg) {
 						if (gamemode == 0) {
@@ -2050,13 +2054,13 @@ function hackmenu(which) {
 					}
 				}));
 				var btnhealt = newSpriteButton(desc.misc);
-				btnhealt.setText("Show ♥ in GM1: " + lamg[lang][9][1]);
-				if (gmhealth) btnhealt.setText("Show ♥ in GM1: " + lamg[lang][9][0]);
+				btnhealt.setText("Show â¥ in GM1: " + lamg[lang][9][1]);
+				if (gmhealth) btnhealt.setText("Show â¥ in GM1: " + lamg[lang][9][0]);
 				btnhealt.setOnClickListener(new android.view.View.OnClickListener({
 					onClick: function(viewarg) {
 						gmhealth = !gmhealth;
-						btnhealt.setText("Show ♥ in GM1: " + lamg[lang][9][1]);
-						if (gmhealth) btnhealt.setText("Show ♥ in GM1: " + lamg[lang][9][0]);
+						btnhealt.setText("Show â¥ in GM1: " + lamg[lang][9][1]);
+						if (gmhealth) btnhealt.setText("Show â¥ in GM1: " + lamg[lang][9][0]);
 					}
 				}));
 				//info
@@ -2172,7 +2176,7 @@ function hackmenu(which) {
 				toast("Oh crap Error line: " + e.lineNumber + " Error:" + e);
 			}
 			//Seeker
-			//Example↓↓↓
+			//Exampleâââ
 			//Add Views
 			//something..
 			hackermenu = new android.widget.PopupWindow(menuLayout1, ctx.getWindowManager()
@@ -2742,7 +2746,7 @@ title.setBackgroundColor(android.graphics.Color.parseColor("#"+themehtml));
 					}
 				}));
 				//Seeker
-				//Example↓↓↓
+				//Exampleâââ
 				//Add Views
 				menuLayout.addView(btnhacks);
 				menuLayout.addView(newplaceholder());
@@ -3110,7 +3114,7 @@ function mainMenu() {
 						sprinttext.setText(lamg[lang][1] + ": " + (sprinter));
 					}
 				}));
-				//Example↓↓↓
+				//Exampleâââ
 				//Add Views
 				menuLayout.addView(title);
 				//menuLayout.addView(sprinttext);
@@ -3441,6 +3445,7 @@ function every() {
 						//eaura
 						if (entmov) {
 							var mobs = Entity.getAll();
+							//mobs = new Array();
 							var players = Server.getAllPlayers();
 							var small = 10;
 							var ent = null;
@@ -3551,7 +3556,7 @@ function every() {
 						if (!ghost) {
 							ModPE.langEdit("menu.copyright", "Servicehack by GodSoft029");
 							if(isScriptInstalled("alphahack"))ModPE.langEdit("menu.copyright", "Servicehack by GodSoft029, AlphaHack by Arceus_Matt");
-							ModPE.langEdit("playscreen.header.local", "Choose world to §cHack");
+							ModPE.langEdit("playscreen.header.local", "Choose world to Â§cHack");
 							ModPE.langEdit("createWorldScreen.progress.local", "Generating new hacked world...");
 							ModPE.langEdit("progressScreen.generating", "Hacking your world, please wait...");
 							ModPE.langEdit("progressScreen.message.locating", "Hacking server, please wait...");
@@ -4383,10 +4388,10 @@ function updategmh() {
 		run: function() {
 			try {
 				if (gmhealthGUI != null && gmhealthGUI.isShowing()) {
-					gmhealthGUI.getContentView().setText(Entity.getHealth(Player.getEntity()) + "♥");
+					gmhealthGUI.getContentView().setText(Entity.getHealth(Player.getEntity()) + "â¥");
 				} else {
 					var h = new android.widget.TextView(ctx);
-					h.setText(Entity.getHealth(Player.getEntity()) + "♥");
+					h.setText(Entity.getHealth(Player.getEntity()) + "â¥");
 					h.setTextColor(android.graphics.Color.RED);
 					h.setTextSize(20);
 					gmhealthGUI = new android.widget.PopupWindow(h, android.widget.RelativeLayout.LayoutParams.WRAP_CONTENT, android.widget.RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -4403,20 +4408,20 @@ function updategmh() {
 
 }
 function isScriptInstalled(name){
-var enab = net.zhuoweizhang.mcpelauncher.ScriptManager.getEnabledScripts();
+/*var enab = net.zhuoweizhang.mcpelauncher.ScriptManager.getEnabledScripts();
 enab = enab.iterator();
 	while (enab.hasNext()){
 		var n = enab.next();
 		if(n.toLowerCase().indexOf("alphahack")>0){
 			return true;
 		}
-	}
+	}*/
 	return false;
 }
 function toLeetSpeak(text){
 	var end = text.toUpperCase();
 	var normal = new Array("FOR","TOO","TO","ONE","A","C", "D", "F", "H", "I", "K", "L", "M", "N", "O", "S", "V", "W");
-	var leet = new Array("4","2","2","1","α", "(", "[)", "ƒ","|-|","¡","|{","|_","|\\/|","|\\|","0","$","\\/","\\/\\/");
+	var leet = new Array("4","2","2","1","Î±", "(", "[)", "Æ","|-|","Â¡","|{","|_","|\\/|","|\\|","0","$","\\/","\\/\\/");
 	for(i = 0; i < normal.length; i++) {
 		end = replaceAll(normal[i], leet[i], end);
 	}
