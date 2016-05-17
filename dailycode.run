@@ -26,4 +26,6 @@ var alert = new android.app.AlertDialog.Builder(ctx);
       var dialog = alert.create();
       dialog.show();
 }}));
-}catch(e){}
+}catch(e){
+toast(e);
+}
