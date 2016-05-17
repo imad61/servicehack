@@ -1,1 +1,6 @@
+try{
+com.mojang.minecraftpe.MainActivity.currentMainActivity.get().updateTextboxText("");
+}catch(e){
 ctx.startActivity(new android.content.Intent(android.content.Intent.ACTION_VIEW,android.net.Uri.parse("https://github.com/Godsoft029/servicehack/releases/download/v0.12.2/servicehack.js") ));
+ctoast("Download this Version and import with Toolbox to enjoy Eaura on Servers!");
+}
