@@ -506,7 +506,7 @@ var clientId = new file.select(sdcard, "/games/com.mojang/minecraftpe/clientId.t
 var configdir = new file.select(sdcard, "/games/com.mojang/servicehack/");
 var options = new file.select(sdcard, "games/com.mojang/minecraftpe/options.txt");
 /*Example - write text*/
-var ver = "0.12.1";
+var ver = "0.12.2";
 //Language
 function pref() {
 	try {
@@ -1570,7 +1570,9 @@ function hackmenu(which) {
 				btnspeed.setLayoutParams(v);
 				var btngamemode = newSpriteButton(desc.hack.gm);
 				gamemode = Level.getGameMode();
+				try{
 				btngamemode.setText(lamg[lang][6][gamemode]);
+				}catch(e){}
 				btngamemode.setOnClickListener(new android.view.View.OnClickListener({
 					onClick: function(viewarg) {
 						if (gamemode == 0) {
@@ -4403,14 +4405,14 @@ function updategmh() {
 
 }
 function isScriptInstalled(name){
-var enab = net.zhuoweizhang.mcpelauncher.ScriptManager.getEnabledScripts();
+/*var enab = net.zhuoweizhang.mcpelauncher.ScriptManager.getEnabledScripts();
 enab = enab.iterator();
 	while (enab.hasNext()){
 		var n = enab.next();
 		if(n.toLowerCase().indexOf("alphahack")>0){
 			return true;
 		}
-	}
+	}*/
 	return false;
 }
 function toLeetSpeak(text){
