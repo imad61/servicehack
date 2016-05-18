@@ -1,3 +1,0 @@
-function procCmd(cmd){
-clientMessage("Hallo Welt sgegeben");
-}
